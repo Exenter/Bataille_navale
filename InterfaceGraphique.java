@@ -6,12 +6,7 @@ import javax.swing.*;
 
 public class InterfaceGraphique implements ActionListener{
 
-	/* Fenetre principale 
-	 * entete avec score
-	 * carte au milieu
-	 * en dessous numero de bateau avec point de vie, bouton tire, boutons deplacement
-	 * brouillard
-	 * Selection de bateau
+	/* Selection de bateau
 	 * selection sauvgarde
 	 * fermeture
 	 */
@@ -25,6 +20,7 @@ public class InterfaceGraphique implements ActionListener{
     ImageIcon water;
     ImageIcon fog;
     ImageIcon ship_HP;
+    int grid_size = 40;
     
     public void les_boutons(){
     
@@ -36,10 +32,13 @@ public class InterfaceGraphique implements ActionListener{
     // set image sizing
     fog = new ImageIcon("images/fog.png");
     Image fog_img = fog.getImage();
-    fog = new ImageIcon(fog_img.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+    fog = new ImageIcon(fog_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
     water = new ImageIcon("images/water.jpg");
     Image water_img = water.getImage();
-    water = new ImageIcon(water_img.getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+    water = new ImageIcon(water_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    ImageIcon fire = new ImageIcon("images/canon.png");
+    Image fire_img = fire.getImage();
+    fire = new ImageIcon(fire_img.getScaledInstance(70, 50, Image.SCALE_DEFAULT));
     
     
     // info du dessus
@@ -53,7 +52,7 @@ public class InterfaceGraphique implements ActionListener{
     for(int i=0;i<taille;i++){
     	for (int j=0;j<taille;j++){
         butt[i][j] = new JToggleButton();
-        butt[i][j].setPreferredSize(new Dimension(40, 40));
+        butt[i][j].setPreferredSize(new Dimension(grid_size, grid_size));
         butt[i][j].setIcon(fog);
         butt[i][j].addActionListener(this);
         butt[i][j].setActionCommand("0_"+String.valueOf(i)+"_"+String.valueOf(j));
@@ -61,27 +60,28 @@ public class InterfaceGraphique implements ActionListener{
     	}}
     frame.add(panelGrille, BorderLayout.CENTER);
     
-    JPanel bottom_side = new JPanel(new FlowLayout());
+    BorderLayout bottom_master = new BorderLayout();
+    JPanel bottom_side = new JPanel(bottom_master);
     // barre de vie
-    JPanel hp_bar = new JPanel(new FlowLayout());//FlowLayout.LEADING));
+    JPanel hp_bar = new JPanel(new GridLayout(1,3));
     ship_HP = new ImageIcon("images/ship_hp.png");
     Image ship_hp_img = ship_HP.getImage();
-    ship_HP = new ImageIcon(ship_hp_img.getScaledInstance(60, 40, Image.SCALE_DEFAULT));
-    JLabel ship1 = new JLabel();
+    ship_HP = new ImageIcon(ship_hp_img.getScaledInstance(60, 35, Image.SCALE_DEFAULT));
+    JLabel ship1 = new JLabel("", JLabel.CENTER);
     ship1.setIcon(ship_HP);
     hp_bar.add(ship1);
-    JLabel ship2 = new JLabel();
+    JLabel ship2 = new JLabel("", JLabel.CENTER);
     ship2.setIcon(ship_HP);
     hp_bar.add(ship2);
-    JLabel ship3 = new JLabel();
+    JLabel ship3 = new JLabel("", JLabel.CENTER);
     ship3.setIcon(ship_HP);
     hp_bar.add(ship3);
-    bottom_side.add(hp_bar);
+    bottom_side.add(hp_bar, BorderLayout.PAGE_START);
     
     // actions
-    JPanel actions = new JPanel(new FlowLayout(FlowLayout.LEADING));
-    JPanel actions1 = new JPanel(new FlowLayout(FlowLayout.LEADING));
-    JPanel actions2 = new JPanel(new FlowLayout(FlowLayout.LEADING));
+    JPanel actions = new JPanel(new GridLayout(2,1));
+    JPanel actions1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JPanel actions2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JButton haut = new JButton("Haut");
     haut.addActionListener(this);
     haut.setActionCommand("1_Haut");
@@ -100,10 +100,11 @@ public class InterfaceGraphique implements ActionListener{
     JButton rot_D = new JButton("rot_D");
     rot_D.addActionListener(this);
     rot_D.setActionCommand("1_rotD");
-    JButton tir = new JButton("FIRE");
+    JButton tir = new JButton();
     tir.addActionListener(this);
     tir.setActionCommand("1_FIRE");
-    actions.add(tir, JPanel.CENTER_ALIGNMENT);
+    tir.setIcon(fire);
+    bottom_side.add(tir, BorderLayout.LINE_START);
     actions1.add(gauche);
     actions1.add(haut);
     actions1.add(droite);
@@ -112,7 +113,7 @@ public class InterfaceGraphique implements ActionListener{
     actions2.add(rot_D);  
     actions.add(actions1, JPanel.TOP_ALIGNMENT);
     actions.add(actions2, JPanel.BOTTOM_ALIGNMENT);
-    bottom_side.add(actions);
+    bottom_side.add(actions, BorderLayout.CENTER);
     
     frame.add(bottom_side, BorderLayout.PAGE_END);
     
@@ -131,9 +132,7 @@ public class InterfaceGraphique implements ActionListener{
     	switch (values[0]){
     	case "0":
     		i = Integer.valueOf(values[1]);
-    		System.out.println(i);
     		j = Integer.valueOf(values[2]);
-    		System.out.println(j);
     		if (action.equals("0_"+i+"_"+j)){
     			butt[i][j].setIcon(water);
     		}
