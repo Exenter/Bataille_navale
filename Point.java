@@ -16,20 +16,20 @@ public class Point {
 		this.y = Y;
 	}
 	
-	public void depX(String sens) {
-		if (sens == "avant") 
+	public void depX(Sens sens) {
+		if (sens == Sens.Avant) 
 			if (verif.contains(x+1)) 
 				x +=1;
-		if (sens == "arriere") 
+		if (sens == Sens.Arriere) 
 			if (verif.contains(x-1)) 
 				x -=1;
 	}
 	
-	public void depY(String sens) {
-		if (sens == "avant") 
+	public void depY(Sens sens) {
+		if (sens == Sens.Avant) 
 			if (verif.contains(y+1)) 
 				y +=1;
-		if (sens == "arriere") 
+		if (sens == Sens.Arriere) 
 			if (verif.contains(y-1)) 
 				y -=1;
 	}
