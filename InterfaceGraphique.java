@@ -7,8 +7,7 @@ import javax.swing.*;
 public class InterfaceGraphique implements ActionListener{
 
 	/* TODO
-	 * Selection de bateau
-	 * selection sauvegarde
+	 * 
 	 */
 	JToggleButton[][] butt;
 	JFrame frame;
@@ -138,6 +137,17 @@ public class InterfaceGraphique implements ActionListener{
     bottom_side.add(actions, BorderLayout.CENTER);
     
     frame.add(bottom_side, BorderLayout.PAGE_END);
+    
+    // Le menu
+    JMenuBar barreMenu = new JMenuBar();
+    JMenu menu = new JMenu("Le_menu");
+    JMenuItem itemSauvegarder = new JMenuItem(new SaveAction("Sauvegarder"));
+    JMenuItem itemQuitter = new JMenuItem(new QuitterAction("Quitter"));
+    menu.add(itemSauvegarder);
+    menu.add(new JSeparator());
+    menu.add(itemQuitter);
+    barreMenu.add(menu);
+    frame.setJMenuBar(barreMenu); 
     
     //fin
     frame.pack();
