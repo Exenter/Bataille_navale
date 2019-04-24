@@ -12,6 +12,18 @@ public class Carte {
 		listeBatMachine = new ArrayList<Bateaux>();
 		taille =15;
 		cases = new Case[taille][taille] ;
+		for(int i=0; i<taille; i++) {
+			for(int j=0; j<taille; j++) {
+				cases[i][j] = new Case();
+			}
+		}
+	}
+	
+	public Carte(int taille) {
+		listeBatHumain = new ArrayList<Bateaux>();
+		listeBatMachine = new ArrayList<Bateaux>();
+		this.taille = taille;
+		cases = new Case[taille][taille] ;
 	}
 	
 	
@@ -54,30 +66,50 @@ public class Carte {
 			for(int i = m.p1.x; i<=m.p2.x; i++) {
 				for(int j = m.p1.y; j<=m.p2.y; j++) {						
 					cases[i][j].occupant = Proprio.Machine;
+					cases[i][j].bat = m;
 					}
 				}
 			}
 		}
 
-				
+	
+
+	
 	public void updateCaseBateau(Bateaux b, Sens s) { //le bateaux a les coordonées de la nouvelle position
+		Case temp;
+		Case temp2;
 			if(b.ori == Orientation.Horizontale) {
+
 				switch (s) {
 				case Avant :
-					cases[b.p1.x - 1][b.p1.y].occupant = Proprio.Libre;
+					temp = cases[b.p1.x - 1][b.p1.y];
+					cases[b.p1.x - 1][b.p1.y] = new Case(Proprio.Libre, temp.vision);
+					
 					cases[b.p2.x][b.p2.y].occupant = b.pro;
+					cases[b.p2.x][b.p2.y].bat = b;
 					break;
+					
 				case Arriere :
-					cases[b.p2.x + 1][b.p2.y].occupant = Proprio.Libre;
+					temp = cases[b.p2.x + 1][b.p2.y];
+					cases[b.p2.x + 1][b.p2.y] = new Case (Proprio.Libre, temp.vision);
+					
 					cases[b.p1.x][b.p1.y].occupant = b.pro;
+					cases[b.p1.x][b.p1.y].bat = b;
 					break;
+					
 				case Rotation: // passage de verticale à horizontale
 					for(int i = 1; i <= b.taille/2-0.5; i++) {
-						cases[b.centre.x][b.centre.y+i].occupant = Proprio.Libre;
-						cases[b.centre.x][b.centre.y-i].occupant = Proprio.Libre;
+						temp = cases[b.centre.x][b.centre.y+i];
+						cases[b.centre.x][b.centre.y+i] = new Case(Proprio.Libre, temp.vision);
+						
+						temp2 = cases[b.centre.x][b.centre.y-i];
+						cases[b.centre.x][b.centre.y-i] = new Case(Proprio.Libre, temp2.vision);
 						
 						cases[b.centre.x+i][b.centre.y].occupant = b.pro;
+						cases[b.centre.x+i][b.centre.y].bat = b;
+						
 						cases[b.centre.x-i][b.centre.y].occupant = b.pro;
+						cases[b.centre.x-i][b.centre.y].bat = b;
 					}
 					break;
 				default:
@@ -89,20 +121,35 @@ public class Carte {
 			if(b.ori == Orientation.Verticale) {
 				switch (s) {
 				case Avant:
-					cases[b.p1.x][b.p1.y-1].occupant = Proprio.Libre;
+					temp = cases[b.p1.x][b.p1.y-1];
+					cases[b.p1.x][b.p1.y-1] = new Case(Proprio.Libre, temp.vision);
+					
 					cases[b.p2.x][b.p2.y].occupant = b.pro;
+					cases[b.p2.x][b.p2.y].bat = b;
 					break;
+					
 				case Arriere :
-					cases[b.p2.x][b.p2.y-1].occupant = Proprio.Libre;
+					temp = cases[b.p2.x][b.p2.y-1];
+					cases[b.p2.x][b.p2.y-1] = new Case(Proprio.Libre, temp.vision);
+					
 					cases[b.p1.x][b.p1.y].occupant = b.pro;
+					cases[b.p1.x][b.p1.y].bat = b;
 					break;
+					
 				case Rotation: // passage d'horizontale à verticale
 					for(int i = 1; i <= b.taille/2-0.5; i++) {
-						cases[b.centre.x][b.centre.y+i].occupant = b.pro;
-						cases[b.centre.x][b.centre.y-i].occupant = b.pro;
 						
-						cases[b.centre.x+i][b.centre.y].occupant = Proprio.Libre;
-						cases[b.centre.x-i][b.centre.y].occupant = Proprio.Libre;
+						cases[b.centre.x][b.centre.y+i].occupant = b.pro;
+						cases[b.centre.x][b.centre.y+i].bat = b;
+						
+						cases[b.centre.x][b.centre.y-i].occupant = b.pro;
+						cases[b.centre.x][b.centre.y-i].bat = b;
+						
+						temp = cases[b.centre.x+i][b.centre.y];
+						cases[b.centre.x+i][b.centre.y] = new Case(Proprio.Libre, temp.vision);
+						
+						temp2 = cases[b.centre.x-i][b.centre.y];
+						cases[b.centre.x-i][b.centre.y] = new Case(Proprio.Libre, temp.vision);
 					}		
 					
 					break;
@@ -193,59 +240,92 @@ public class Carte {
 	}	
 
 
+	
 	public Boolean verifDepPossible(Bateaux b, Sens s) {
 		Boolean depPossible = false;
 		Bateaux temp = b;
 		temp.deplacementBateau(s);
 		
 		if(temp.centre.x != b.centre.x || temp.centre.y != b.centre.y || temp.p1.x != b.p1.x) { /// si le bateaux a bouger
-			if(temp.ori == Orientation.Horizontale) {
 				switch (s) {
 				case Avant:
 					if(cases[temp.p2.x][temp.p2.y].occupant == Proprio.Libre) {
 						depPossible = true;
 					}		
 					break;
-				case Arriere:
 					
+				case Arriere:
+					if(cases[temp.p1.x][temp.p1.y].occupant == Proprio.Libre) {
+						depPossible = true;
+					}
 					break;
+					
 				case Rotation:
+					depPossible = true;
+					if(temp.ori == Orientation.Horizontale) { /// Passage de vert à horiz
+						for(int i= temp.p1.x; i< temp.centre.x; i++) {
+							if(cases[i][temp.centre.y].occupant == Proprio.Humain || cases[i][temp.centre.y].occupant == Proprio.Machine) {
+								depPossible = false;
+							}
+						}
+						for(int i = temp.centre.x+1; i<= temp.p2.x; i++) {
+							if(cases[i][temp.centre.y].occupant == Proprio.Humain || cases[i][temp.centre.y].occupant == Proprio.Machine) {
+								depPossible = false;
+							}
+						}
+						
+					}
+					
+					else if(temp.ori == Orientation.Verticale) { /// Passage de horiz à vert
+						for(int i= temp.p1.y; i< temp.centre.y; i++) {
+							if(cases[temp.centre.x][i].occupant == Proprio.Humain || cases[temp.centre.x][i].occupant == Proprio.Machine) {
+								depPossible = false;
+							}
+						}
+						for(int i = temp.centre.y+1; i<= temp.p2.y; i++) {
+							if(cases[temp.centre.x][i].occupant == Proprio.Humain || cases[temp.centre.x][i].occupant == Proprio.Machine) {
+								depPossible = false;
+							}
+						}
+					}
 					
 					break;
 
 				default:
 					System.exit(0);
 					break;
-				}
 			}
 			
-			else if(temp.ori == Orientation.Verticale) {
-				switch (s) {
-				case Avant:
-					
-					break;
-				case Arriere:
-					
-					break;
-				case Rotation:
-					
-					break;
-
-				default:
-					System.exit(0);
-					break;
-				}
-			}
 		}
-		
-		
-		
-		
-		
 		return depPossible;
 	}
 
-
-
+	
+	public void tire(int x, int y) {
+		if(cases[x][y].occupant == Proprio.Humain) {
+			for(Bateaux item:listeBatHumain) {
+				if(item.numero == cases[x][y].bat.numero) {
+					item.updateVie();
+					cases[x][y].bat.updateVie();
+					if(item.vie == 0) {
+						listeBatHumain.remove(item);
+					}
+				}
+			}
+			
+		}
+		else if(cases[x][y].occupant == Proprio.Machine) {
+			for(Bateaux item:listeBatMachine) {
+				if(item.numero == cases[x][y].bat.numero) {
+					item.updateVie();
+					cases[x][y].bat.updateVie();
+					if(item.vie == 0) {
+						listeBatMachine.remove(item);
+					}
+				}
+			}
+		}
+	}
+////UNDER CONSTRUCTION /////		//// UNDER CONSTRUCTION /////		//// UNDER CONSTRUCTION /////
 
 }

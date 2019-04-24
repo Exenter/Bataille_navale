@@ -3,7 +3,7 @@ public class Bateaux {
 	int taille; // impaire
 	int vie;
 	Proprio pro;
-	
+	int numero = 0;
 	Point p1;
 	Point centre;
 	Point p2;
@@ -11,8 +11,10 @@ public class Bateaux {
 	
 	//// CONSTRUCTEUR /////
 public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
+		
 		this.pro = pro;
 		this.centre = centre;
+		numero += 1;
 		if(p1.x < p2.x || p1.y < p2.y) {
 			this.p1 = p1;
 			this.p2 = p2;
@@ -25,15 +27,17 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 		if(p1.x == p2.x && p1.x == centre.x) {
 			ori = Orientation.Verticale;
 			taille = p2.y -p1.y;
+			vie = taille;
 		}
 		else {
 			ori = Orientation.Horizontale;
 			taille = p2.x - p1.x;
+			vie = taille;
 		}
 	}
 
 	//// FONCTIONS /////
-//fonction verif dep pour colision
+
 	public void deplacementBateau(Sens sens) {
 
 		switch (sens) {
@@ -86,7 +90,11 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 	}
 		
 	
-	
+	public void updateVie() {
+		while(vie >= 0) {
+			vie = vie - 1;
+		}
+	}
 	
 		
 }
@@ -94,9 +102,7 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 	
 	//Methodes
 	
-	/* deplacement du bateau
-	 * 		gestion des bord
-	 * tire
+	/* tire
 	 * changement point de vie
 	 */
 
