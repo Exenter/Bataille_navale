@@ -6,20 +6,22 @@ import javax.swing.*;
 
 public class InterfaceGraphique implements ActionListener{
 
-	/* Selection de bateau
-	 * selection sauvgarde
-	 * fermeture
+	/* TODO
+	 * Selection de bateau
+	 * selection sauvegarde
 	 */
 	JToggleButton[][] butt;
 	JFrame frame;
     JPanel panel;
     JLabel label;
-    int i,j;
-    static int k;
-    int taille = 20;
+    JLabel hp_bar1;
+    JLabel hp_bar2;
+    JLabel hp_bar3;
     ImageIcon water;
     ImageIcon fog;
-    ImageIcon ship_HP;
+    ImageIcon ship;
+    int i,j;
+    int taille = 20;
     int grid_size = 40;
     
     public void les_boutons(){
@@ -39,6 +41,12 @@ public class InterfaceGraphique implements ActionListener{
     ImageIcon fire = new ImageIcon("images/canon.png");
     Image fire_img = fire.getImage();
     fire = new ImageIcon(fire_img.getScaledInstance(70, 50, Image.SCALE_DEFAULT));
+    ship = new ImageIcon("images/ship_hp.png");
+    Image ship_img = ship.getImage();
+    ship = new ImageIcon(ship_img.getScaledInstance(60, 35, Image.SCALE_DEFAULT));
+    
+    //enlever pour le vrai test !
+    ImageIcon ship_hp3 = new ImageIcon("images/3_hp.png");
     
     
     // info du dessus
@@ -58,24 +66,32 @@ public class InterfaceGraphique implements ActionListener{
         butt[i][j].setActionCommand("0_"+String.valueOf(i)+"_"+String.valueOf(j));
         panelGrille.add(butt[i][j]);
     	}}
+    
     frame.add(panelGrille, BorderLayout.CENTER);
     
     BorderLayout bottom_master = new BorderLayout();
     JPanel bottom_side = new JPanel(bottom_master);
+    
     // barre de vie
-    JPanel hp_bar = new JPanel(new GridLayout(1,3));
-    ship_HP = new ImageIcon("images/ship_hp.png");
-    Image ship_hp_img = ship_HP.getImage();
-    ship_HP = new ImageIcon(ship_hp_img.getScaledInstance(60, 35, Image.SCALE_DEFAULT));
-    JLabel ship1 = new JLabel("", JLabel.CENTER);
-    ship1.setIcon(ship_HP);
+    JPanel hp_bar = new JPanel(new GridLayout(1,6));
+    hp_bar1 = new JLabel("", JLabel.CENTER);
+    hp_bar1.setIcon(ship_hp3);
+    hp_bar2 = new JLabel("", JLabel.CENTER);
+    hp_bar2.setIcon(ship_hp3);
+    hp_bar3 = new JLabel("", JLabel.CENTER);
+    hp_bar3.setIcon(ship_hp3);
+    JButton ship1 = new JButton();
+    ship1.setIcon(ship);
     hp_bar.add(ship1);
-    JLabel ship2 = new JLabel("", JLabel.CENTER);
-    ship2.setIcon(ship_HP);
+    hp_bar.add(hp_bar1);
+    JButton ship2 = new JButton();
+    ship2.setIcon(ship);
     hp_bar.add(ship2);
-    JLabel ship3 = new JLabel("", JLabel.CENTER);
-    ship3.setIcon(ship_HP);
+    hp_bar.add(hp_bar2);
+    JButton ship3 = new JButton();
+    ship3.setIcon(ship);
     hp_bar.add(ship3);
+    hp_bar.add(hp_bar3);
     bottom_side.add(hp_bar, BorderLayout.PAGE_START);
     
     // actions
@@ -124,6 +140,75 @@ public class InterfaceGraphique implements ActionListener{
     
     }
 
+    public void setWater_Image(){
+    	
+    }
+    
+    public void remaining_hp(int boat, int hp){
+    	ImageIcon ship_hp0 = new ImageIcon("images/0_hp.png");
+    	ImageIcon ship_hp1 = new ImageIcon("images/1_hp.png");
+    	ImageIcon ship_hp2 = new ImageIcon("images/2_hp.png");
+    	ImageIcon ship_hp3 = new ImageIcon("images/3_hp.png");
+    	switch(boat){
+    	case 1:
+    		switch(hp){
+    		case 0:
+    			hp_bar1.setIcon(ship_hp0);
+    			break;
+    		case 1:
+    			hp_bar1.setIcon(ship_hp1);
+    			break;
+    		case 2:
+    			hp_bar1.setIcon(ship_hp2);
+    			break;
+    		case 3:
+    			hp_bar1.setIcon(ship_hp3);
+    			break;
+    		default:
+    			hp_bar1.setIcon(ship_hp3);
+    			break;    		
+    		}
+    		break;
+    	case 2:
+    		switch(hp){
+    		case 0:
+    			hp_bar2.setIcon(ship_hp0);
+    			break;
+    		case 1:
+    			hp_bar2.setIcon(ship_hp1);
+    			break;
+    		case 2:
+    			hp_bar2.setIcon(ship_hp2);
+    			break;
+    		case 3:
+    			hp_bar2.setIcon(ship_hp3);
+    			break;
+    		default:
+    			hp_bar2.setIcon(ship_hp3);
+    			break;    		
+    		}
+    		break;
+    	case 3:
+    		switch(hp){
+    		case 0:
+    			hp_bar3.setIcon(ship_hp0);
+    			break;
+    		case 1:
+    			hp_bar3.setIcon(ship_hp1);
+    			break;
+    		case 2:
+    			hp_bar3.setIcon(ship_hp2);
+    			break;
+    		case 3:
+    			hp_bar3.setIcon(ship_hp3);
+    			break;
+    		default:
+    			hp_bar3.setIcon(ship_hp3);
+    			break;    		
+    		}
+    		break;
+    	}
+    }
     
 	public void actionPerformed(ActionEvent Act) {
     	String action = Act.getActionCommand();
@@ -166,8 +251,7 @@ public class InterfaceGraphique implements ActionListener{
 	}
     
     public static void main(String[] args){
-        new InterfaceGraphique().les_boutons(); 
-        
+        new InterfaceGraphique().les_boutons();         
     }
 
 }
