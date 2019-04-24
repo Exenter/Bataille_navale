@@ -20,13 +20,14 @@ public class InterfaceGraphique implements ActionListener{
     ImageIcon water;
     ImageIcon fog;
     ImageIcon ship;
-    int i,j;
+    int i,j, boat;
     int taille = 20;
     int grid_size = 40;
+    int hp = 3;
     
     public void les_boutons(){
     
-	frame=new JFrame("Bataille Navale with a twist");
+	frame=new JFrame("Bataille Navaleuuhhh with a twist");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setLayout(new BorderLayout());
     JPanel panelGrille = new JPanel(new GridLayout(taille, taille));
@@ -46,8 +47,7 @@ public class InterfaceGraphique implements ActionListener{
     ship = new ImageIcon(ship_img.getScaledInstance(60, 35, Image.SCALE_DEFAULT));
     
     //enlever pour le vrai test !
-    ImageIcon ship_hp3 = new ImageIcon("images/3_hp.png");
-    
+    ImageIcon ship_hp3 = new ImageIcon("images/3_hp.png");    
     
     // info du dessus
     JPanel top_side = new JPanel();
@@ -81,14 +81,20 @@ public class InterfaceGraphique implements ActionListener{
     hp_bar3 = new JLabel("", JLabel.CENTER);
     hp_bar3.setIcon(ship_hp3);
     JButton ship1 = new JButton();
+    ship1.addActionListener(this);
+    ship1.setActionCommand("2_ship_1");
     ship1.setIcon(ship);
     hp_bar.add(ship1);
     hp_bar.add(hp_bar1);
     JButton ship2 = new JButton();
+    ship2.addActionListener(this);
+    ship2.setActionCommand("2_ship_2");
     ship2.setIcon(ship);
     hp_bar.add(ship2);
     hp_bar.add(hp_bar2);
     JButton ship3 = new JButton();
+    ship3.addActionListener(this);
+    ship3.setActionCommand("2_ship_3");
     ship3.setIcon(ship);
     hp_bar.add(ship3);
     hp_bar.add(hp_bar3);
@@ -118,7 +124,7 @@ public class InterfaceGraphique implements ActionListener{
     rot_D.setActionCommand("1_rotD");
     JButton tir = new JButton();
     tir.addActionListener(this);
-    tir.setActionCommand("1_FIRE");
+    tir.setActionCommand("3_FIRE");
     tir.setIcon(fire);
     bottom_side.add(tir, BorderLayout.LINE_START);
     actions1.add(gauche);
@@ -140,11 +146,27 @@ public class InterfaceGraphique implements ActionListener{
     
     }
 
-    public void setWater_Image(){
-    	
+    public int setWater(int I, JToggleButton B){
+    	switch(I){
+    	case 1:
+    		water = new ImageIcon("images/water.jpg");
+    	    Image water_img = water.getImage();
+    	    water = new ImageIcon(water_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    	    B.setIcon(water);
+    	    break;
+    	case 2:
+    		water = new ImageIcon("images/ship_y1.png");
+    	    Image water_img2 = water.getImage();
+    	    water = new ImageIcon(water_img2.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    	    B.setIcon(water);
+    	    break;
+    	case 3:
+    		B.setIcon(fog);
+    	}
+    	return I;
     }
     
-    public void remaining_hp(int boat, int hp){
+    public int remaining_hp(int boat, int hp){
     	ImageIcon ship_hp0 = new ImageIcon("images/0_hp.png");
     	ImageIcon ship_hp1 = new ImageIcon("images/1_hp.png");
     	ImageIcon ship_hp2 = new ImageIcon("images/2_hp.png");
@@ -208,6 +230,7 @@ public class InterfaceGraphique implements ActionListener{
     		}
     		break;
     	}
+    	return hp;
     }
     
 	public void actionPerformed(ActionEvent Act) {
@@ -219,7 +242,7 @@ public class InterfaceGraphique implements ActionListener{
     		i = Integer.valueOf(values[1]);
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
-    			butt[i][j].setIcon(water);
+    			setWater(1, butt[i][j]);
     		}
     		break;
     	case "1":
@@ -234,6 +257,7 @@ public class InterfaceGraphique implements ActionListener{
 	        	System.out.println("check");
 	        	break;
 	        case "Droite":
+	        	setWater(2, butt[i][j]);
 	        	System.out.println("check");
 	        	break;
 	        case "rotG":
@@ -242,11 +266,20 @@ public class InterfaceGraphique implements ActionListener{
 	        case "rotD":
 	        	System.out.println("check");
 	        	break;
-	        case "FIRE":
-	        	System.out.println("check");
-	        	break;
 	        }
 	        break;
+    	case "2":
+    		//hp =3;
+    		boat = Integer.valueOf(values[2]);
+    		break;
+    	case "3":
+    		System.out.println(boat);
+    		if (hp >= 1){
+        		hp -= 1;
+        		remaining_hp(boat, hp);
+        		System.out.println("check");
+    		}
+        	break;
         }
 	}
     
