@@ -27,12 +27,12 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 		if(p1.x == p2.x && p1.x == centre.x) {
 			ori = Orientation.Verticale;
 			taille = p2.y -p1.y;
-			vie = taille;
+			vie = taille+1;
 		}
 		else {
 			ori = Orientation.Horizontale;
 			taille = p2.x - p1.x;
-			vie = taille;
+			vie = taille+1;
 		}
 	}
 
@@ -97,9 +97,9 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 		
 	
 	public void updateVie() {
-		while(vie >= 0) {
+		
 			vie = vie - 1;
-		}
+		
 	}
 	
 		
