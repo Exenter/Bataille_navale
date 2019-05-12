@@ -29,15 +29,56 @@ public class PseudoPartie {
 		Bateaux b4 = new Bateaux(b4_p1, b4_c, b4_p2, Proprio.Machine);
 		c.addBateaux(b4);
 		
-		
-		for(int i=b4.p1.x-1; i<=b4.p2.x+1; i++) {
-			for(int j=b4.p1.y-1; j<=b4.p2.y+1; j++) {
+		//System.out.println(c.verifDepPossible(b4, Sens.Avant));
+		System.out.println("AVANT DEP");
+		for(int i=b1.p1.x; i<=b1.p2.x; i++) {
+			for(int j=b1.p1.y; j<=b1.p2.y; j++) {
 				System.out.println("i: "+i+" j: "+j);
 				System.out.println(c.cases[i][j].occupant);
 				System.out.println(c.cases[i][j].vision);
+				//System.out.println("\n");
 			}
 		}
 		
+		Sens s = Sens.Rotation;
+		
+		if(c.verifDepPossible(b1, s)) {
+			//System.out.println("eh beh");
+			b1.deplacementBateau(s);
+			//System.out.println("orientaion: "+b4.ori);
+			//System.out.println(c.cases[b4.p1.x-1][b4.p1.y].occupant);
+			c.updateCaseBateau(b1,s);
+			//System.out.println("orientaion: "+b4.ori);
+			//System.out.println(c.cases[b4.p1.x-1][b4.p1.y].occupant);
+			c.updateVisibilité(b1, s);
+		};
+	
+		System.out.println("\n //////// APRES DEP ///////////");
+		System.out.println("\n devrait etre libre et claire");
+		int i =3;
+		int j =2; 
+		System.out.println("i: "+i+" j: "+j);
+		System.out.println(c.cases[i][j].occupant);
+		System.out.println(c.cases[i][j].vision);
+		
+		//System.out.println("\n devrait etre claire");
+		i =3;
+		j =4; 
+		System.out.println("i: "+i+" j: "+j);
+		System.out.println(c.cases[i][j].occupant);
+		System.out.println(c.cases[i][j].vision);
+		
+		System.out.println("\n devrait etre Humain");
+		for( i=b1.p1.x; i<=b1.p2.x; i++) {
+			for( j=b1.p1.y; j<=b1.p2.y; j++) {
+				System.out.println("i: "+i+" j: "+j);
+				System.out.println(c.cases[i][j].occupant);
+				System.out.println(c.cases[i][j].vision);
+				//System.out.println("\n");
+			}
+		}
+		
+
 		
 		
 		

@@ -42,9 +42,11 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 
 		switch (sens) {
 		case Avant :
-			if (ori == Orientation.Verticale) {
+			if (ori == Orientation.Horizontale) {
 				p1.depX(sens);
+				//System.out.println("class bateau coordoné x init b.centre: "+ centre.x);
 				centre.depX(sens);
+				//System.out.println("class bateau coordoné x new b.centre: "+ centre.x);
 				p2.depX(sens);
 			}
 			else {
@@ -55,7 +57,7 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 			
 			break;
 		case Arriere:
-			if (ori == Orientation.Verticale) {
+			if (ori == Orientation.Horizontale) {
 				p1.depX(sens);
 				centre.depX(sens);
 				p2.depX(sens);
@@ -70,13 +72,17 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 			
 		case Rotation:
 			if (ori == Orientation.Verticale) {
-				p1.rotationX(centre, "+");
-				p2.rotationX(centre, "-");
+				p1.rotationX(centre, "-");
+				p2.rotationX(centre, "+");
+				p1.y = centre.y;
+				p2.y = centre.y;
 				ori = Orientation.Horizontale;
 			}
 			else {
-				p1.rotationY(centre, "+");
-				p2.rotationY(centre, "-");
+				p1.rotationY(centre, "-");
+				p2.rotationY(centre, "+");
+				p1.x = centre.x;
+				p2.x = centre.x;
 				ori = Orientation.Verticale;
 			}
 			
