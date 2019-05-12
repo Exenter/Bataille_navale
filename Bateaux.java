@@ -38,6 +38,19 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 
 	//// FONCTIONS /////
 
+	public void setCaseBateau(Orientation o){
+		if (o == Orientation.Verticale){
+			setWaterState(2, p1.x, p1.y);
+			setWaterState(3, centre.x, centre.y);
+			setWaterState(4, p2.x, p2.y);
+		}
+		else{
+			setWaterState(5, p1.x, p1.y);
+			setWaterState(6, centre.x, centre.y);
+			setWaterState(7, p2.x, p2.y);
+		}
+	}	
+	
 	public void deplacementBateau(Sens sens) {
 
 		switch (sens) {
