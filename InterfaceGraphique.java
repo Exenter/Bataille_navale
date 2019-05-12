@@ -4,19 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class InterfaceGraphique implements ActionListener{
+public class InterfaceGraphique extends JFrame implements ActionListener{
 
 	/* TODO
 	 * 
 	 */
 	JToggleButton[][] butt;
-	JFrame frame;
     JPanel panel;
     JLabel label;
     JLabel hp_bar1;
     JLabel hp_bar2;
     JLabel hp_bar3;
-    ImageIcon water;
+    //ImageIcon water;
     ImageIcon fog;
     ImageIcon ship;
     int i,j, boat;
@@ -24,20 +23,33 @@ public class InterfaceGraphique implements ActionListener{
     int grid_size = 40;
     int hp = 3;
     
+    public InterfaceGraphique(){
+    	butt = new JToggleButton[taille][taille];
+        for(int i=0;i<taille;i++){
+        	for (int j=0;j<taille;j++){
+            butt[i][j] = new JToggleButton();
+            butt[i][j].setPreferredSize(new Dimension(grid_size, grid_size));
+            butt[i][j].addActionListener(this);
+            butt[i][j].setActionCommand("0_"+String.valueOf(i)+"_"+String.valueOf(j));
+            setWaterState(8, i, j);
+        	}
+        }
+    }
+    
     public void les_boutons(){
     
-	frame=new JFrame("Bataille Navaleuuhhh with a twist");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setLayout(new BorderLayout());
+	setTitle("Bataille Navale with a twist");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLayout(new BorderLayout());
     JPanel panelGrille = new JPanel(new GridLayout(taille, taille));
     
     // set image sizing
-    fog = new ImageIcon("images/fog.png");
-    Image fog_img = fog.getImage();
-    fog = new ImageIcon(fog_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    water = new ImageIcon("images/water.jpg");
-    Image water_img = water.getImage();
-    water = new ImageIcon(water_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+//    fog = new ImageIcon("images/fog.png");
+//    Image fog_img = fog.getImage();
+//    fog = new ImageIcon(fog_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+//    water = new ImageIcon("images/water.jpg");
+//    Image water_img = water.getImage();
+//    water = new ImageIcon(water_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
     ImageIcon fire = new ImageIcon("images/canon.png");
     Image fire_img = fire.getImage();
     fire = new ImageIcon(fire_img.getScaledInstance(70, 50, Image.SCALE_DEFAULT));
@@ -52,21 +64,16 @@ public class InterfaceGraphique implements ActionListener{
     JPanel top_side = new JPanel();
     label = new JLabel("THE CAKE IS A LIE", JLabel.CENTER);
     top_side.add(label);
-    frame.add(top_side, BorderLayout.PAGE_START);
+    add(top_side, BorderLayout.PAGE_START);
     
     //la carte
-    butt = new JToggleButton[taille][taille];
+    //butt = new JToggleButton[taille][taille];
     for(int i=0;i<taille;i++){
     	for (int j=0;j<taille;j++){
-        butt[i][j] = new JToggleButton();
-        butt[i][j].setPreferredSize(new Dimension(grid_size, grid_size));
-        butt[i][j].setIcon(fog);
-        butt[i][j].addActionListener(this);
-        butt[i][j].setActionCommand("0_"+String.valueOf(i)+"_"+String.valueOf(j));
         panelGrille.add(butt[i][j]);
     	}}
     
-    frame.add(panelGrille, BorderLayout.CENTER);
+    add(panelGrille, BorderLayout.CENTER);
     
     BorderLayout bottom_master = new BorderLayout();
     JPanel bottom_side = new JPanel(bottom_master);
@@ -103,27 +110,40 @@ public class InterfaceGraphique implements ActionListener{
     JPanel actions = new JPanel(new GridLayout(2,1));
     JPanel actions1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel actions2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    JButton haut = new JButton("Haut");
+    JButton haut = new JButton();
     haut.addActionListener(this);
     haut.setActionCommand("1_Haut");
-    JButton bas = new JButton("Bas");
+    ImageIcon up = new ImageIcon("images/up.png");
+    haut.setIcon(up);
+    JButton bas = new JButton();
     bas.addActionListener(this);
     bas.setActionCommand("1_Bas");
-    JButton gauche = new JButton("Gauche");
+    ImageIcon bot = new ImageIcon("images/bot.png");
+    bas.setIcon(bot);
+    JButton gauche = new JButton();
     gauche.addActionListener(this);
     gauche.setActionCommand("1_Gauche");
-    JButton droite = new JButton("Droite");
+    ImageIcon left = new ImageIcon("images/left.png");
+    gauche.setIcon(left);
+    JButton droite = new JButton();
     droite.addActionListener(this);
     droite.setActionCommand("1_Droite");
-    JButton rot_G = new JButton("rot_G");
+    ImageIcon right = new ImageIcon("images/right.png");
+    droite.setIcon(right);
+    JButton rot_G = new JButton();
     rot_G.addActionListener(this);
     rot_G.setActionCommand("1_rotG");
-    JButton rot_D = new JButton("rot_D");
+    ImageIcon rotG = new ImageIcon("images/rotG.png");
+    rot_G.setIcon(rotG);
+    JButton rot_D = new JButton();
     rot_D.addActionListener(this);
     rot_D.setActionCommand("1_rotD");
+    ImageIcon rotD = new ImageIcon("images/rotD.png");
+    rot_D.setIcon(rotD);
     JButton tir = new JButton();
     tir.addActionListener(this);
     tir.setActionCommand("3_FIRE");
+    tir.setPreferredSize(new Dimension(70,60));
     tir.setIcon(fire);
     bottom_side.add(tir, BorderLayout.LINE_START);
     actions1.add(gauche);
@@ -136,7 +156,7 @@ public class InterfaceGraphique implements ActionListener{
     actions.add(actions2, JPanel.BOTTOM_ALIGNMENT);
     bottom_side.add(actions, BorderLayout.CENTER);
     
-    frame.add(bottom_side, BorderLayout.PAGE_END);
+    add(bottom_side, BorderLayout.PAGE_END);
     
     // Le menu
     JMenuBar barreMenu = new JMenuBar();
@@ -147,33 +167,73 @@ public class InterfaceGraphique implements ActionListener{
     menu.add(new JSeparator());
     menu.add(itemQuitter);
     barreMenu.add(menu);
-    frame.setJMenuBar(barreMenu); 
+    setJMenuBar(barreMenu); 
     
     //fin
-    frame.pack();
-	frame.setLocationRelativeTo(null);
-	frame.setVisible(true);
+    pack();
+	setLocationRelativeTo(null);
+	setVisible(true);
     
     }
 
-    public int setWater(int I, JToggleButton B){
+    public int setWaterState(int I, int Bx, int By){
+    	
+    	butt[Bx][By].repaint();
     	switch(I){
     	case 1:
-    		water = new ImageIcon("images/water.jpg");
+    		ImageIcon water = new ImageIcon("images/water.jpg");
     	    Image water_img = water.getImage();
     	    water = new ImageIcon(water_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    B.setIcon(water);
+    	    butt[Bx][By].setIcon(water);
     	    break;
     	case 2:
+    		System.out.println("setWater check");
     		water = new ImageIcon("images/ship_y1.png");
     	    Image water_img2 = water.getImage();
     	    water = new ImageIcon(water_img2.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    B.setIcon(water);
+    	    System.out.println(butt[Bx][By]);
+    	    butt[Bx][By].setIcon(water);
     	    break;
     	case 3:
-    		B.setIcon(fog);
+    		water = new ImageIcon("images/ship_y2.png");
+    	    Image water_img3 = water.getImage();
+    	    water = new ImageIcon(water_img3.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    	    butt[Bx][By].setIcon(water);
+    	    break;
+    	case 4:
+    		water = new ImageIcon("images/ship_y3.png");
+    	    Image water_img4 = water.getImage();
+    	    water = new ImageIcon(water_img4.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    	    butt[Bx][By].setIcon(water);
+    	    break;
+    	case 5:
+    		water = new ImageIcon("images/ship_x1.png");
+    	    Image water_img5 = water.getImage();
+    	    water = new ImageIcon(water_img5.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    	    butt[Bx][By].setIcon(water);
+    	    break;
+    	case 6:
+    		water = new ImageIcon("images/ship_x2.png");
+    	    Image water_img6 = water.getImage();
+    	    water = new ImageIcon(water_img6.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    	    butt[Bx][By].setIcon(water);
+    	    break;
+    	case 7:
+    		water = new ImageIcon("images/ship_x3.png");
+    	    Image water_img7 = water.getImage();
+    	    water = new ImageIcon(water_img7.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    	    butt[Bx][By].setIcon(water);
+    	    break;
+    	case 8:
+    		fog = new ImageIcon("images/fog.png");
+    	    Image fog_img = fog.getImage();
+    	    water = new ImageIcon(fog_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
+    		butt[Bx][By].setIcon(fog);
+    		break;
     	}
+    	butt[Bx][By].revalidate();
     	return I;
+    	
     }
     
     public int remaining_hp(int boat, int hp){
@@ -252,7 +312,7 @@ public class InterfaceGraphique implements ActionListener{
     		i = Integer.valueOf(values[1]);
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
-    			setWater(1, butt[i][j]);
+    			setWaterState(1, i, j);
     		}
     		break;
     	case "1":
@@ -267,7 +327,7 @@ public class InterfaceGraphique implements ActionListener{
 	        	System.out.println("check");
 	        	break;
 	        case "Droite":
-	        	setWater(2, butt[i][j]);
+	        	setWaterState(2, i, j);
 	        	System.out.println("check");
 	        	break;
 	        case "rotG":
@@ -288,13 +348,15 @@ public class InterfaceGraphique implements ActionListener{
         		hp -= 1;
         		remaining_hp(boat, hp);
         		System.out.println("check");
+        		label.setText("Touché !");			
     		}
+    		else
+    			label.setText("T'es mauvais Jack");
         	break;
         }
 	}
-    
-    public static void main(String[] args){
-        new InterfaceGraphique().les_boutons();         
-    }
-
+	
+	public static void main(String[] args) {
+		new InterfaceGraphique().les_boutons(); 
+	}
 }
