@@ -1,5 +1,5 @@
 
-public class Bateaux {
+public class Bateaux extends InterfaceGraphique{
 	int taille; // impaire
 	int vie;
 	Proprio pro;
