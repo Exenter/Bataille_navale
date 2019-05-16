@@ -327,7 +327,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     		i = Integer.valueOf(values[1]);
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
-    			setWaterState(1, i, j);
+    			setWaterState(1, j, i);
     		}
     		break;
     	case "1":
@@ -361,7 +361,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        break;
     	case "2":
     		//hp =3;
-    		boat = Integer.valueOf(values[2]);
+    		boat = Integer.valueOf(values[2])-1;
     		break;
     	case "3":
     		System.out.println(boat);
