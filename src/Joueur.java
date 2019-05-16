@@ -3,18 +3,61 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Joueur {
 	int nbrBatInitial;
-	int score;
+	static int score;
+	static String nom;
 	Proprio nature;
 	ArrayList<Bateaux> listeBat;
 	ArrayList<Point> listePoint;
 	
-	public Joueur(Proprio nature, int nbrBatInitial) {
+	public Joueur(Proprio nature, int nbrBatInitial, String nom) {
 		this.nature = nature;
 		score = 0;
 		this.nbrBatInitial = nbrBatInitial;
+		this.nom = nom;
 		listeBat = new ArrayList<Bateaux>();		
 		listePoint = new ArrayList<Point>();
+		if(nature == Proprio.Humain) {
+			Point b1_p1 = new Point(3,2);
+			Point b1_c = new Point(3,3);
+			Point b1_p2 = new Point(3,4);
+			Bateaux b_1 = new Bateaux(b1_p1, b1_c, b1_p2, Proprio.Humain);
+			addBateaux(b_1);
+			
+			Point b2_p1 = new Point(2,11);
+			Point b2_c = new Point(3,11);
+			Point b2_p2 = new Point(4,11);
+			Bateaux b_2 = new Bateaux(b2_p1, b2_c, b2_p2, Proprio.Humain);
+			addBateaux(b_2);
+			
+			Point b3_p1 = new Point(14,11);
+			Point b3_c = new Point(14,12);
+			Point b3_p2 = new Point(14,13);
+			Bateaux b_3 = new Bateaux(b3_p1, b3_c, b3_p2, Proprio.Humain);
+			addBateaux(b_3);
+			
+		}
+		else {
+			Point b4_p1 = new Point(5,7);
+			Point b4_c = new Point(6,7);
+			Point b4_p2 = new Point(7,7);
+			Bateaux b_4 = new Bateaux(b4_p1, b4_c, b4_p2, Proprio.Machine);
+			addBateaux(b_4);
+			
+			Point b5_p1 = new Point(12,8);
+			Point b5_c = new Point(12,9);
+			Point b5_p2 = new Point(12,10);
+			Bateaux b_5 = new Bateaux(b5_p1, b5_c, b5_p2, Proprio.Machine);
+			addBateaux(b_5);
+			
+			Point b6_p1 = new Point(12,8);
+			Point b6_c = new Point(12,9);
+			Point b6_p2 = new Point(12,10);
+			Bateaux b_6 = new Bateaux(b6_p1, b6_c, b6_p2, Proprio.Machine);
+			addBateaux(b_6);
+			
+		}	
 	}
+	
 	
 	public void updateScore() {
 		score += 1;
