@@ -10,7 +10,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	 * faire fonctionner l'affichage des bateaux
 	 */
 	
-	JToggleButton[][] butt;
+	JButton[][] butt;
     JPanel panel;
     JLabel label;
     JLabel hp_bar1;
@@ -22,18 +22,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     int taille = 20;
     int grid_size = 40;
     int hp = 3;
+    Joueur joueur;
+    Joueur IA;
     
-    public InterfaceGraphique(){
-    	butt = new JToggleButton[taille][taille];
+    public InterfaceGraphique(Joueur joueur, Joueur IA){
+    	butt = new JButton[taille][taille];
         for(int i=0;i<taille;i++){
         	for (int j=0;j<taille;j++){
-            butt[i][j] = new JToggleButton();
+            butt[i][j] = new JButton();
             butt[i][j].setPreferredSize(new Dimension(grid_size, grid_size));
             butt[i][j].addActionListener(this);
             butt[i][j].setActionCommand("0_"+String.valueOf(i)+"_"+String.valueOf(j));
-            setWaterState(8, i, j);
         	}
         }
+        this.joueur = joueur;
+        this.IA = IA;
     }
     
     public void les_boutons(){
@@ -64,6 +67,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     for(int i=0;i<taille;i++){
     	for (int j=0;j<taille;j++){
         panelGrille.add(butt[i][j]);
+        setWaterState(8, i, j);
     	}}
     
     add(panelGrille, BorderLayout.CENTER);
@@ -175,51 +179,51 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     		ImageIcon water = new ImageIcon("images/water.jpg");
     	    Image water_img = water.getImage();
     	    water = new ImageIcon(water_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    butt[Bx][By].setIcon(water);
+    	    butt[By][Bx].setIcon(water);
     	    break;
     	case 2:
     		System.out.println("setWater check");
     		water = new ImageIcon("images/ship_y1.png");
     	    Image water_img2 = water.getImage();
     	    water = new ImageIcon(water_img2.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    System.out.println(butt[Bx][By]);
-    	    butt[Bx][By].setIcon(water);
+    	    System.out.println(butt[By][Bx]);
+    	    butt[By][Bx].setIcon(water);
     	    break;
     	case 3:
     		water = new ImageIcon("images/ship_y2.png");
     	    Image water_img3 = water.getImage();
     	    water = new ImageIcon(water_img3.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    butt[Bx][By].setIcon(water);
+    	    butt[By][Bx].setIcon(water);
     	    break;
     	case 4:
     		water = new ImageIcon("images/ship_y3.png");
     	    Image water_img4 = water.getImage();
     	    water = new ImageIcon(water_img4.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    butt[Bx][By].setIcon(water);
+    	    butt[By][Bx].setIcon(water);
     	    break;
     	case 5:
     		water = new ImageIcon("images/ship_x1.png");
     	    Image water_img5 = water.getImage();
     	    water = new ImageIcon(water_img5.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    butt[Bx][By].setIcon(water);
+    	    butt[By][Bx].setIcon(water);
     	    break;
     	case 6:
     		water = new ImageIcon("images/ship_x2.png");
     	    Image water_img6 = water.getImage();
     	    water = new ImageIcon(water_img6.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    butt[Bx][By].setIcon(water);
+    	    butt[By][Bx].setIcon(water);
     	    break;
     	case 7:
     		water = new ImageIcon("images/ship_x3.png");
     	    Image water_img7 = water.getImage();
     	    water = new ImageIcon(water_img7.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    butt[Bx][By].setIcon(water);
+    	    butt[By][Bx].setIcon(water);
     	    break;
     	case 8:
     		fog = new ImageIcon("images/fog.png");
     	    Image fog_img = fog.getImage();
     	    water = new ImageIcon(fog_img.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    		butt[Bx][By].setIcon(fog);
+    		butt[By][Bx].setIcon(fog);
     		break;
     	}
 
@@ -293,6 +297,11 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	return hp;
     }
     
+//    public Bateaux selectBoat(int B){
+//    	
+//    	return bat;
+//    }
+    
 	public void actionPerformed(ActionEvent Act) {
     	String action = Act.getActionCommand();
     	System.out.println(action);
@@ -309,22 +318,28 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        switch (values[1]){
 	        case "Haut":
 	        	System.out.println("check");
+	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Avant);
 	        	break;
 	        case "Bas":
 	        	System.out.println("check");
+	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Arriere);
 	        	break;
 	        case "Gauche":
 	        	System.out.println("check");
+	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Arriere);
 	        	break;
 	        case "Droite":
 	        	setWaterState(2, i, j);
 	        	System.out.println("check");
+	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Avant);
 	        	break;
 	        case "rotG":
 	        	System.out.println("check");
+	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Rotation);
 	        	break;
 	        case "rotD":
 	        	System.out.println("check");
+	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Rotation);
 	        	break;
 	        }
 	        break;
@@ -335,9 +350,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	case "3":
     		System.out.println(boat);
     		if (hp >= 1){
+    			joueur.listeBat.get(boat).updateVie();
         		hp -= 1;
-        		remaining_hp(boat, hp);
-        		System.out.println("check");
+        		remaining_hp(boat, joueur.listeBat.get(boat).vie);
         		label.setText("Touché !");			
     		}
     		else
@@ -347,6 +362,6 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) {
-		new InterfaceGraphique().les_boutons(); 
+		//new InterfaceGraphique().les_boutons(); 
 	}
 }
