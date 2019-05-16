@@ -24,9 +24,11 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     int hp = 3;
     Joueur homoSapiens;
     Joueur IA;
+    Carte carte;
     
-    public InterfaceGraphique(Joueur homoSapiens, Joueur IA){
+    public InterfaceGraphique(Joueur homoSapiens, Joueur IA, Carte carte){
     	butt = new JButton[taille][taille];
+    	this.carte = carte;
         for(int i=0;i<taille;i++){
         	for (int j=0;j<taille;j++){
             butt[i][j] = new JButton();
@@ -37,7 +39,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
         }
         this.homoSapiens = homoSapiens;
         this.IA = IA;
-        Joueur.nom = JOptionPane.showInputDialog(this, "Choose a name :", "Yarrhhh");
+        //homoSapiens.nom = JOptionPane.showInputDialog(this, "Choose a name :", "Yarrhhh");
     }
     
     public void les_boutons(){
@@ -68,7 +70,10 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     for(int i=0;i<taille;i++){
     	for (int j=0;j<taille;j++){
         panelGrille.add(butt[i][j]);
-        setWaterState(8, i, j);
+        if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+        	setWaterState(1, i, j);
+        else
+        	setWaterState(8, i, j);
     	}}
     
     add(panelGrille, BorderLayout.CENTER);
@@ -328,43 +333,133 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
     			setWaterState(1, j, i);
+    			carte.cases[i][j].vision = Vision.Claire;
+    			System.out.println(carte.cases[i][j].occupant+" "+carte.cases[i][j].vision);
+    			//ca pique les yeux mais ca marche
+    			if(carte.cases[i][j].occupant == Proprio.Machine){
+               		setCaseBateau(carte.cases[i][j].bat);
+               		carte.cases[i][j].bat.updateVie(); 
+					homoSapiens.updateScore();
+					if(carte.cases[i][j].bat.vie == 0){
+						carte.listeBatMachine.remove(carte.cases[i][j].bat);
+	              		for(int x = carte.cases[i][j].bat.p1.x; x<=carte.cases[i][j].bat.p2.x; x++) {
+							for(int y = carte.cases[i][j].bat.p1.y; y<=carte.cases[i][j].bat.p2.y; y++) {
+								carte.cases[y][x].occupant = Proprio.Libre;
+								setWaterState(1, x, y);
+							}	
+	              		}	
+					}
+    			}
     		}
     		break;
     	case "1":
 	        switch (values[1]){
 	        case "Haut":
-	        	System.out.println("check");
-	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
+	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Avant)) {
+		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
+		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Avant);
+		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Avant);
+		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+		        	for(int i=0;i<taille;i++){
+		            	for (int j=0;j<taille;j++){
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+		                	setWaterState(1, i, j);
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                	setCaseBateau(carte.cases[i][j].bat);
+		            	}}
+	        	}
 	        	break;
+	        	
 	        case "Bas":
-	        	System.out.println("check");
-	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
+	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Arriere)) {
+		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
+		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Arriere);
+		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Arriere);
+		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+		        	for(int i=0;i<taille;i++){
+		            	for (int j=0;j<taille;j++){
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+		                	setWaterState(1, i, j);
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                	setCaseBateau(carte.cases[i][j].bat);
+		            	}}
+	        	}
 	        	break;
+	        	
 	        case "Gauche":
-	        	System.out.println("check");
-	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
+	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Arriere)) {
+		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
+		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Arriere);
+		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Arriere);
+		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+		        	for(int i=0;i<taille;i++){
+		            	for (int j=0;j<taille;j++){
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+		                	setWaterState(1, i, j);
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                	setCaseBateau(carte.cases[i][j].bat);
+		                }}
+	        	}
 	        	break;
+	        	
 	        case "Droite":
-	        	setWaterState(2, i, j);
-	        	System.out.println("check");
-	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
+	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Avant)) {
+		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
+		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Avant);
+		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Avant);
+		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+		        	for(int i=0;i<taille;i++){
+		            	for (int j=0;j<taille;j++){
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+		                	setWaterState(1, i, j);
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                	setCaseBateau(carte.cases[i][j].bat);
+		                }
+		            	}
+	        	}
 	        	break;
+	        	
 	        case "rotG":
-	        	System.out.println("check");
-	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
+	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Rotation)) {
+		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
+		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Rotation);
+		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Rotation);
+		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+		        	for(int i=0;i<taille;i++){
+		            	for (int j=0;j<taille;j++){
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+		                	setWaterState(1, i, j);
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                	setCaseBateau(carte.cases[i][j].bat);
+		                }}
+	        	}
 	        	break;
+	        	
 	        case "rotD":
-	        	System.out.println("check");
-	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
+	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Rotation)) {
+		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
+		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Rotation);
+		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Rotation);
+		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+		        	for(int i=0;i<taille;i++){
+		            	for (int j=0;j<taille;j++){
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+		                	setWaterState(1, i, j);
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                	setCaseBateau(carte.cases[i][j].bat);
+		                }}
+	        	}
 	        	break;
+	        	
 	        }
 	        break;
     	case "2":
-    		//hp =3;
     		boat = Integer.valueOf(values[2])-1;
     		break;
     	case "3":
     		System.out.println(boat);
+    		if (carte.cases[i][j].occupant == Proprio.Machine)
+    			System.out.println();
     		if (hp >= 1){
     			homoSapiens.listeBat.get(boat).updateVie();
         		hp -= 1;

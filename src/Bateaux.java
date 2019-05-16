@@ -89,12 +89,15 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 				centre.depX(sens);
 				//System.out.println("class bateau coordoné x new b.centre: "+ centre.x);
 				p2.depX(sens);
+				System.out.println(ori+" "+centre.x+centre.y);
 			}
 			else {
 				p1.depY(sens);
 				centre.depY(sens);
 				p2.depY(sens);
+				System.out.println(ori+" "+centre.x+centre.y);
 			}
+			
 			
 			break;
 		case Arriere:
@@ -138,8 +141,9 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
 		
 	
 	public void updateVie() {
-		
 			vie = vie - 1;
+			if (vie < 0)
+				vie =0;
 		
 	}
 	
