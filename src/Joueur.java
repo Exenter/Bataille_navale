@@ -23,35 +23,35 @@ public class Joueur {
 			Bateaux b_1 = new Bateaux(b1_p1, b1_c, b1_p2, Proprio.Humain);
 			addBateaux(b_1);
 			
-			Point b2_p1 = new Point(2,11);
-			Point b2_c = new Point(3,11);
-			Point b2_p2 = new Point(4,11);
+			Point b2_p1 = new Point(7,17);
+			Point b2_c = new Point(8,17);
+			Point b2_p2 = new Point(9,17);
 			Bateaux b_2 = new Bateaux(b2_p1, b2_c, b2_p2, Proprio.Humain);
 			addBateaux(b_2);
 			
-			Point b3_p1 = new Point(14,11);
-			Point b3_c = new Point(14,12);
-			Point b3_p2 = new Point(14,13);
+			Point b3_p1 = new Point(17,11);
+			Point b3_c = new Point(17,12);
+			Point b3_p2 = new Point(17,13);
 			Bateaux b_3 = new Bateaux(b3_p1, b3_c, b3_p2, Proprio.Humain);
 			addBateaux(b_3);
 			
 		}
 		else {
-			Point b4_p1 = new Point(5,7);
-			Point b4_c = new Point(6,7);
-			Point b4_p2 = new Point(7,7);
+			Point b4_p1 = new Point(5,10);
+			Point b4_c = new Point(6,10);
+			Point b4_p2 = new Point(7,10);
 			Bateaux b_4 = new Bateaux(b4_p1, b4_c, b4_p2, Proprio.Machine);
 			addBateaux(b_4);
 			
-			Point b5_p1 = new Point(12,8);
-			Point b5_c = new Point(12,9);
-			Point b5_p2 = new Point(12,10);
+			Point b5_p1 = new Point(14,16);
+			Point b5_c = new Point(14,17);
+			Point b5_p2 = new Point(14,18);
 			Bateaux b_5 = new Bateaux(b5_p1, b5_c, b5_p2, Proprio.Machine);
 			addBateaux(b_5);
 			
-			Point b6_p1 = new Point(12,8);
-			Point b6_c = new Point(12,9);
-			Point b6_p2 = new Point(12,10);
+			Point b6_p1 = new Point(12,1);
+			Point b6_c = new Point(13,1);
+			Point b6_p2 = new Point(14,1);
 			Bateaux b_6 = new Bateaux(b6_p1, b6_c, b6_p2, Proprio.Machine);
 			addBateaux(b_6);
 			
@@ -104,8 +104,8 @@ public class Joueur {
 		boolean tirePoss = false;
 		Point p = new Point();
 		while(!tirePoss ) {
-			int X = ThreadLocalRandom.current().nextInt(0,15);
-			int Y = ThreadLocalRandom.current().nextInt(0,15);
+			int X = ThreadLocalRandom.current().nextInt(0,InterfaceGraphique.taille);
+			int Y = ThreadLocalRandom.current().nextInt(0,InterfaceGraphique.taille);
 			p = new Point(X, Y);
 			//System.out.println("coo point alea: " +p.x+" "+p.y);
 			int i=0;

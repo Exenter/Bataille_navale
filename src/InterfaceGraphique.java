@@ -19,13 +19,13 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     ImageIcon fog;
     ImageIcon ship;
     int i,j, boat;
-    int taille = 20;
+    static int taille = 20;
     int grid_size = 40;
     int hp = 3;
-    Joueur joueur;
+    Joueur homoSapiens;
     Joueur IA;
     
-    public InterfaceGraphique(Joueur joueur, Joueur IA){
+    public InterfaceGraphique(Joueur homoSapiens, Joueur IA){
     	butt = new JButton[taille][taille];
         for(int i=0;i<taille;i++){
         	for (int j=0;j<taille;j++){
@@ -35,8 +35,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
             butt[i][j].setActionCommand("0_"+String.valueOf(i)+"_"+String.valueOf(j));
         	}
         }
-        this.joueur = joueur;
+        this.homoSapiens = homoSapiens;
         this.IA = IA;
+        Joueur.nom = JOptionPane.showInputDialog(this, "Choose a name :", "Yarrhhh");
     }
     
     public void les_boutons(){
@@ -302,6 +303,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 //    	return bat;
 //    }
     
+    
+    public void setCaseBateau(Bateaux b){
+		if (b.ori == Orientation.Verticale){
+			setWaterState(2, b.p1.x, b.p1.y);
+			setWaterState(3, b.centre.x, b.centre.y);
+			setWaterState(4, b.p2.x, b.p2.y);
+
+		}
+		else{
+			setWaterState(5, b.p1.x, b.p1.y);
+			setWaterState(6, b.centre.x, b.centre.y);
+			setWaterState(7, b.p2.x, b.p2.y);
+		}
+	}	
+    
 	public void actionPerformed(ActionEvent Act) {
     	String action = Act.getActionCommand();
     	System.out.println(action);
@@ -318,28 +334,28 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        switch (values[1]){
 	        case "Haut":
 	        	System.out.println("check");
-	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Avant);
+	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
 	        	break;
 	        case "Bas":
 	        	System.out.println("check");
-	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Arriere);
+	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
 	        	break;
 	        case "Gauche":
 	        	System.out.println("check");
-	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Arriere);
+	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
 	        	break;
 	        case "Droite":
 	        	setWaterState(2, i, j);
 	        	System.out.println("check");
-	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Avant);
+	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
 	        	break;
 	        case "rotG":
 	        	System.out.println("check");
-	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Rotation);
+	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
 	        	break;
 	        case "rotD":
 	        	System.out.println("check");
-	        	joueur.listeBat.get(boat).deplacementBateau(Sens.Rotation);
+	        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
 	        	break;
 	        }
 	        break;
@@ -350,9 +366,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	case "3":
     		System.out.println(boat);
     		if (hp >= 1){
-    			joueur.listeBat.get(boat).updateVie();
+    			homoSapiens.listeBat.get(boat).updateVie();
         		hp -= 1;
-        		remaining_hp(boat, joueur.listeBat.get(boat).vie);
+        		remaining_hp(boat, homoSapiens.listeBat.get(boat).vie);
         		label.setText("Touché !");			
     		}
     		else

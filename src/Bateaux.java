@@ -37,21 +37,47 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, InterfaceGraphique
 		}
 	}
 
+public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
+	gui = null;
+	this.pro = pro;
+	this.centre = centre;
+	numero += 1;
+	if(p1.x < p2.x || p1.y < p2.y) {
+		this.p1 = p1;
+		this.p2 = p2;
+	}
+	else {
+		this.p1 = p2;
+		this.p2 = p1;
+	}
+
+	if(p1.x == p2.x && p1.x == centre.x) {
+		ori = Orientation.Verticale;
+		taille = p2.y -p1.y;
+		vie = taille+1;
+	}
+	else {
+		ori = Orientation.Horizontale;
+		taille = p2.x - p1.x;
+		vie = taille+1;
+	}
+}
+
 	//// FONCTIONS /////
 
-	public void setCaseBateau(Orientation o){
-		if (o == Orientation.Horizontale){
-			gui.setWaterState(2, p1.x, p1.y);
-			gui.setWaterState(3, centre.x, centre.y);
-			gui.setWaterState(4, p2.x, p2.y);
-
-		}
-		else{
-			gui.setWaterState(5, p1.x, p1.y);
-			gui.setWaterState(6, centre.x, centre.y);
-			gui.setWaterState(7, p2.x, p2.y);
-		}
-	}	
+//	public void setCaseBateau(Orientation o){
+//		if (o == Orientation.Verticale){
+//			gui.setWaterState(2, p1.x, p1.y);
+//			gui.setWaterState(3, centre.x, centre.y);
+//			gui.setWaterState(4, p2.x, p2.y);
+//
+//		}
+//		else{
+//			gui.setWaterState(5, p1.x, p1.y);
+//			gui.setWaterState(6, centre.x, centre.y);
+//			gui.setWaterState(7, p2.x, p2.y);
+//		}
+//	}	
 	
 	public void deplacementBateau(Sens sens) {
 

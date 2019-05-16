@@ -10,10 +10,10 @@ public class Carte {
 	public Carte() {
 		listeBatHumain = new ArrayList<Bateaux>();
 		listeBatMachine = new ArrayList<Bateaux>();
-		taille =15;
+		taille =InterfaceGraphique.taille;
 		cases = new Case[taille][taille] ;
-		for(int i=0; i<taille; i++) {
-			for(int j=0; j<taille; j++) {
+		for(int j=0; j<taille; j++) {
+			for(int i=0; i<taille; i++) {
 				cases[i][j] = new Case();
 			}
 		}
