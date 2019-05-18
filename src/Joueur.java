@@ -37,9 +37,9 @@ public class Joueur {
 			
 		}
 		else {
-			Point b4_p1 = new Point(5,10);
-			Point b4_c = new Point(6,10);
-			Point b4_p2 = new Point(7,10);
+			Point b4_p1 = new Point(3,10);
+			Point b4_c = new Point(4,10);
+			Point b4_p2 = new Point(5,10);
 			Bateaux b_4 = new Bateaux(b4_p1, b4_c, b4_p2, Proprio.Machine);
 			addBateaux(b_4);
 			
@@ -49,9 +49,9 @@ public class Joueur {
 			Bateaux b_5 = new Bateaux(b5_p1, b5_c, b5_p2, Proprio.Machine);
 			addBateaux(b_5);
 			
-			Point b6_p1 = new Point(12,1);
-			Point b6_c = new Point(13,1);
-			Point b6_p2 = new Point(14,1);
+			Point b6_p1 = new Point(16,1);
+			Point b6_c = new Point(17,1);
+			Point b6_p2 = new Point(18,1);
 			Bateaux b_6 = new Bateaux(b6_p1, b6_c, b6_p2, Proprio.Machine);
 			addBateaux(b_6);
 			
