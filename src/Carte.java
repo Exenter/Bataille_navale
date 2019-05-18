@@ -79,7 +79,7 @@ public class Carte {
 		Point p1t = new Point(b.p1.x, b.p1.y);
 		Point centret = new Point(b.centre.x, b.centre.y);
 		Point p2t = new Point(b.p2.x, b.p2.y);
-		Bateaux temp = new Bateaux(p1t,centret,p2t,b.pro);
+		Bateaux temp = new Bateaux(p1t,centret,p2t,b.pro, b.numero);
 		temp.deplacementBateau(s);
 		//System.out.println("class carte, x centre temp new coordoné: " +temp.centre.x );
 		//System.out.println("class carte, x centre coordoné init bateau: " +b.centre.x);

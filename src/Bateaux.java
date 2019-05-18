@@ -11,13 +11,14 @@ public class Bateaux{
 	Orientation ori;
 	InterfaceGraphique gui;
 	//// CONSTRUCTEUR /////
-public Bateaux(Point p1, Point centre, Point p2, Proprio pro, InterfaceGraphique x ) {
+public Bateaux(Point p1, Point centre, Point p2, Proprio pro, InterfaceGraphique x, int numero) {
 		gui = x;
 		this.pro = pro;
 		this.centre = centre;
-		numero += 1;
+		this.numero = numero;
 		if(p1.x < p2.x || p1.y < p2.y) {
 			this.p1 = p1;
+			
 			this.p2 = p2;
 		}
 		else {
@@ -37,11 +38,11 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, InterfaceGraphique
 		}
 	}
 
-public Bateaux(Point p1, Point centre, Point p2, Proprio pro ) {
+public Bateaux(Point p1, Point centre, Point p2, Proprio pro, int numero ) {
 	gui = null;
 	this.pro = pro;
 	this.centre = centre;
-	numero += 1;
+	this.numero= numero;
 	if(p1.x < p2.x || p1.y < p2.y) {
 		this.p1 = p1;
 		this.p2 = p2;

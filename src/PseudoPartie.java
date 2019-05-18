@@ -70,11 +70,11 @@ public class PseudoPartie {
 							vie = b.vie;
 						}
 					}
-					int ind = IG.homoSapiens.listeBat.indexOf(IG.carte.cases[p.x][p.y].bat);
-					System.out.println("Bateau n°"+ind);
+					int ind = IG.carte.cases[p.x][p.y].bat.numero;
+					System.out.println("Bateau n°"+ ind+ "num bat: "+IG.carte.cases[p.x][p.y].bat.numero);
 					IG.carte.tire(p.x, p.y, IG.IA, IG.homoSapiens);
 					System.out.println("FIRE IN THE HALL");
-					IG.remaining_hp(ind+1, IG.carte.cases[p.x][p.y].bat.vie);
+					IG.remaining_hp(ind, IG.carte.cases[p.x][p.y].bat.vie);
 				}
 				IG.tour = 0;
 			}

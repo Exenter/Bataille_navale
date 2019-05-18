@@ -21,19 +21,19 @@ public class Joueur {
 			Point b1_p1 = new Point(3,2);
 			Point b1_c = new Point(3,3);
 			Point b1_p2 = new Point(3,4);
-			Bateaux b_1 = new Bateaux(b1_p1, b1_c, b1_p2, Proprio.Humain);
+			Bateaux b_1 = new Bateaux(b1_p1, b1_c, b1_p2, Proprio.Humain,1);
 			addBateaux(b_1);
 			
 			Point b2_p1 = new Point(7,17);
 			Point b2_c = new Point(8,17);
 			Point b2_p2 = new Point(9,17);
-			Bateaux b_2 = new Bateaux(b2_p1, b2_c, b2_p2, Proprio.Humain);
+			Bateaux b_2 = new Bateaux(b2_p1, b2_c, b2_p2, Proprio.Humain, 2);
 			addBateaux(b_2);
 			
 			Point b3_p1 = new Point(17,11);
 			Point b3_c = new Point(17,12);
 			Point b3_p2 = new Point(17,13);
-			Bateaux b_3 = new Bateaux(b3_p1, b3_c, b3_p2, Proprio.Humain);
+			Bateaux b_3 = new Bateaux(b3_p1, b3_c, b3_p2, Proprio.Humain, 3);
 			addBateaux(b_3);
 			
 		}
@@ -41,19 +41,19 @@ public class Joueur {
 			Point b4_p1 = new Point(3,10);
 			Point b4_c = new Point(4,10);
 			Point b4_p2 = new Point(5,10);
-			Bateaux b_4 = new Bateaux(b4_p1, b4_c, b4_p2, Proprio.Machine);
+			Bateaux b_4 = new Bateaux(b4_p1, b4_c, b4_p2, Proprio.Machine, 4);
 			addBateaux(b_4);
 			
 			Point b5_p1 = new Point(14,16);
 			Point b5_c = new Point(14,17);
 			Point b5_p2 = new Point(14,18);
-			Bateaux b_5 = new Bateaux(b5_p1, b5_c, b5_p2, Proprio.Machine);
+			Bateaux b_5 = new Bateaux(b5_p1, b5_c, b5_p2, Proprio.Machine, 5);
 			addBateaux(b_5);
 			
 			Point b6_p1 = new Point(16,1);
 			Point b6_c = new Point(17,1);
 			Point b6_p2 = new Point(18,1);
-			Bateaux b_6 = new Bateaux(b6_p1, b6_c, b6_p2, Proprio.Machine);
+			Bateaux b_6 = new Bateaux(b6_p1, b6_c, b6_p2, Proprio.Machine, 6);
 			addBateaux(b_6);
 			
 		}	
