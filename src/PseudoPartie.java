@@ -32,6 +32,7 @@ public class PseudoPartie {
 		int numB = 15;
 		Sens s = Sens.Avant;
 		Point p = new Point();
+		int vie =3;
 		while(!IG.carte.listeBatHumain.isEmpty() && !IG.carte.listeBatMachine.isEmpty()){
 			System.out.print(""); //Magic syso is magic
 			
@@ -62,15 +63,15 @@ public class PseudoPartie {
 					p = IG.homoSapiens.listePoint.get(X);
 				}
 				
-				int vie =3;
+				
 				if (IG.homoSapiens.listePoint.contains(p)){
 					for(Bateaux b:IG.homoSapiens.listeBat){
 						if((b.p1.x == p.x && b.p1.y == p.y) || (b.centre.x == p.x && b.centre.y == p.y) || (b.p2.x == p.x && b.p2.y == p.y)){
 							vie = b.vie;
-							System.out.println("vie:"+vie);
 						}
 					}
 					int ind = IG.homoSapiens.listeBat.indexOf(IG.carte.cases[p.x][p.y].bat);
+					System.out.println("Bateau n°"+ind);
 					IG.carte.tire(p.x, p.y, IG.IA, IG.homoSapiens);
 					System.out.println("FIRE IN THE HALL");
 					IG.remaining_hp(ind+1, IG.carte.cases[p.x][p.y].bat.vie);
