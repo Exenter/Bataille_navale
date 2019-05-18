@@ -302,12 +302,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	}
     	return hp;
     }
-    
-//    public Bateaux selectBoat(int B){
-//    	
-//    	return bat;
-//    }
-    
+        
     
     public void setCaseBateau(Bateaux b){
 		if (b.ori == Orientation.Verticale){
@@ -341,14 +336,16 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
                		carte.cases[i][j].bat.updateVie(); 
 					homoSapiens.updateScore();
 					if(carte.cases[i][j].bat.vie == 0){
-						carte.listeBatMachine.remove(carte.cases[i][j].bat);
 	              		for(int x = carte.cases[i][j].bat.p1.x; x<=carte.cases[i][j].bat.p2.x; x++) {
 							for(int y = carte.cases[i][j].bat.p1.y; y<=carte.cases[i][j].bat.p2.y; y++) {
-								carte.cases[y][x].occupant = Proprio.Libre;
+								carte.cases[x][y].occupant = Proprio.Libre;
 								setWaterState(1, x, y);
+						
 							}	
 	              		}	
-					}
+	              	carte.listeBatMachine.remove(carte.cases[i][j].bat);
+	              	carte.cases[i][j] = new Case(Proprio.Libre, Vision.Claire);
+					}	
     			}
     		}
     		break;
@@ -470,9 +467,5 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     			label.setText("T'es mauvais Jack");
         	break;
         }
-	}
-	
-	public static void main(String[] args) {
-		//new InterfaceGraphique().les_boutons(); 
 	}
 }

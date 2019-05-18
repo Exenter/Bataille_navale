@@ -65,8 +65,8 @@ public class Carte {
 		for(Bateaux m:listeBatMachine) {
 			for(int i = m.p1.x; i<=m.p2.x; i++) {
 				for(int j = m.p1.y; j<=m.p2.y; j++) {						
-					cases[i][j].occupant = Proprio.Machine;
-					cases[i][j].bat = m;
+					cases[j][i].occupant = Proprio.Machine;
+					cases[j][i].bat = m;
 					}
 				}
 			}
