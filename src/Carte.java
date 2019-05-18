@@ -43,16 +43,16 @@ public class Carte {
 	
 	public void setCaseBateau() {
 		for(Bateaux b:listeBatHumain) {
-			for(int j = b.p1.x; j<b.p2.x+1; j++) {   /// Determination cases bateaux
-				for(int i = b.p1.y; i<b.p2.y+1; i++) {
+			for(int i = b.p1.x; i<b.p2.x+1; i++) {   /// Determination cases bateaux
+				for(int j = b.p1.y; j<b.p2.y+1; j++) {
 					cases[i][j].occupant = Proprio.Humain;
 					cases[i][j].vision = Vision.Claire;
 					cases[i][j].bat = b;
 				}
 			}
 			
-			for(int j = b.p1.x-1; j <= b.p2.x+1; j++ ) { /// Determiner vision autour ////// /!\ ATENTION ne pas metre 2 bateau humain a coté au debut /!\ !!!!!!///////
-				for(int i = b.p1.y-1; i <= b.p2.y+1; i++ ) {
+			for(int i = b.p1.x-1; i <= b.p2.x+1; i++ ) { /// Determiner vision autour ////// /!\ ATENTION ne pas metre 2 bateau humain a coté au debut /!\ !!!!!!///////
+				for(int j = b.p1.y-1; j <= b.p2.y+1; j++ ) {
 					if (0<i && i<taille && 0<j && j<taille) {
 						if (cases[i][j].occupant != Proprio.Humain && cases[i][j].vision == Vision.Brouillard) {
 							cases[i][j].vision = Vision.Claire;
@@ -63,8 +63,8 @@ public class Carte {
 		}
 		
 		for(Bateaux m:listeBatMachine) {
-			for(int j = m.p1.x; j<=m.p2.x; j++) {
-				for(int i = m.p1.y; i<=m.p2.y; i++) {						
+			for(int i = m.p1.x; i<=m.p2.x; i++) {
+				for(int j = m.p1.y; j<=m.p2.y; j++) {						
 					cases[i][j].occupant = Proprio.Machine;
 					cases[i][j].bat = m;
 					}
