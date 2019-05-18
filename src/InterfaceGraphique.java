@@ -19,6 +19,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     ImageIcon fog;
     ImageIcon ship;
     int i,j, boat;
+    int tour;
     static int taille = 20;
     int grid_size = 40;
     int hp = 3;
@@ -75,6 +76,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
         else
         	setWaterState(8, i, j);
     	}}
+    
     
     add(panelGrille, BorderLayout.CENTER);
     
@@ -188,11 +190,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	    butt[By][Bx].setIcon(water);
     	    break;
     	case 2:
-    		System.out.println("setWater check");
     		water = new ImageIcon("images/ship_y1.png");
     	    Image water_img2 = water.getImage();
     	    water = new ImageIcon(water_img2.getScaledInstance(grid_size, grid_size, Image.SCALE_DEFAULT));
-    	    System.out.println(butt[By][Bx]);
     	    butt[By][Bx].setIcon(water);
     	    break;
     	case 3:
@@ -317,41 +317,58 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 			setWaterState(7, b.p2.x, b.p2.y);
 		}
 	}	
+  
+    public void updateCaseMachine(){
+    	for(int x = 0; x<taille; x++) {
+			for(int y = 0; y<taille; y++) {
+				if (carte.cases[y][x].occupant == Proprio.Machine && carte.cases[y][x].vision == Vision.Claire){
+					setCaseBateau(carte.cases[y][x].bat);
+				}
+			}}
+    }
     
 	public void actionPerformed(ActionEvent Act) {
     	String action = Act.getActionCommand();
-    	System.out.println(action);
     	String[] values = action.split("_");
     	switch (values[0]){
     	case "0":
+    		tour++;
+    		System.out.println(tour);
     		i = Integer.valueOf(values[1]);
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
     			System.out.println("i :"+j+", j:"+i);
-    			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
-    			setWaterState(1, j, i);
-    			carte.cases[j][i].vision = Vision.Claire;
+    			if(carte.cases[j][i].occupant == Proprio.Libre){
+    				setWaterState(1, j, i);
+    				label.setText("Raté !");
+    				carte.cases[j][i].vision = Vision.Claire;}
     			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
     			//ca pique les yeux mais ca marche
     			if(carte.cases[j][i].occupant == Proprio.Machine){
                		setCaseBateau(carte.cases[j][i].bat);
                		carte.cases[j][i].bat.updateVie(); 
 					homoSapiens.updateScore();
+					label.setText("Touché !");
 					if(carte.cases[j][i].bat.vie == 0){
 	              		for(int x = carte.cases[j][i].bat.p1.x; x<=carte.cases[j][i].bat.p2.x; x++) {
 							for(int y = carte.cases[j][i].bat.p1.y; y<=carte.cases[j][i].bat.p2.y; y++) {
 								carte.cases[y][x].occupant = Proprio.Libre;
 								setWaterState(1, x, y);
-						
 							}	
 	              		}	
 		              	carte.listeBatMachine.remove(carte.cases[j][i].bat);
+		              	label.setText("Un de moins");
+		              	if(carte.listeBatMachine.isEmpty()){
+		              		JOptionPane.showMessageDialog(this, "GG WP no re");
+		              	}
 		              	carte.cases[j][i] = new Case(Proprio.Libre, Vision.Claire);
 					}	
     			}
     		}
     		break;
     	case "1":
+    		tour++;
+    		System.out.println(tour);
 	        switch (values[1]){
 	        case "Haut":
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Avant)) {
