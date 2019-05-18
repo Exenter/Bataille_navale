@@ -96,6 +96,7 @@ public class Carte {
 				case Arriere:
 					if(cases[temp.p1.x][temp.p1.y].occupant == Proprio.Libre) {
 						depPossible = true;
+						System.out.println(depPossible+"dep possible");
 					}
 					break;
 					

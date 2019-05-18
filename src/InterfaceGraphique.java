@@ -327,24 +327,26 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     		i = Integer.valueOf(values[1]);
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
+    			System.out.println("i :"+j+", j:"+i);
+    			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
     			setWaterState(1, j, i);
-    			carte.cases[i][j].vision = Vision.Claire;
-    			System.out.println(carte.cases[i][j].occupant+" "+carte.cases[i][j].vision);
+    			carte.cases[j][i].vision = Vision.Claire;
+    			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
     			//ca pique les yeux mais ca marche
-    			if(carte.cases[i][j].occupant == Proprio.Machine){
-               		setCaseBateau(carte.cases[i][j].bat);
-               		carte.cases[i][j].bat.updateVie(); 
+    			if(carte.cases[j][i].occupant == Proprio.Machine){
+               		setCaseBateau(carte.cases[j][i].bat);
+               		carte.cases[j][i].bat.updateVie(); 
 					homoSapiens.updateScore();
-					if(carte.cases[i][j].bat.vie == 0){
-	              		for(int x = carte.cases[i][j].bat.p1.x; x<=carte.cases[i][j].bat.p2.x; x++) {
-							for(int y = carte.cases[i][j].bat.p1.y; y<=carte.cases[i][j].bat.p2.y; y++) {
-								carte.cases[x][y].occupant = Proprio.Libre;
+					if(carte.cases[j][i].bat.vie == 0){
+	              		for(int x = carte.cases[j][i].bat.p1.x; x<=carte.cases[j][i].bat.p2.x; x++) {
+							for(int y = carte.cases[j][i].bat.p1.y; y<=carte.cases[j][i].bat.p2.y; y++) {
+								carte.cases[y][x].occupant = Proprio.Libre;
 								setWaterState(1, x, y);
 						
 							}	
 	              		}	
-	              	carte.listeBatMachine.remove(carte.cases[i][j].bat);
-	              	carte.cases[i][j] = new Case(Proprio.Libre, Vision.Claire);
+		              	carte.listeBatMachine.remove(carte.cases[j][i].bat);
+		              	carte.cases[j][i] = new Case(Proprio.Libre, Vision.Claire);
 					}	
     			}
     		}
