@@ -8,6 +8,7 @@ public class Joueur {
 	Proprio nature;
 	ArrayList<Bateaux> listeBat;
 	ArrayList<Point> listePoint;
+	int KillAllHumans;
 	
 	public Joueur(Proprio nature, int nbrBatInitial, String nom) {
 		this.nature = nature;
@@ -124,8 +125,7 @@ public class Joueur {
 			}
 			
 		}
-		System.out.println(tirePoss);
-
+		KillAllHumans++;
 		return p;
 	}
 }

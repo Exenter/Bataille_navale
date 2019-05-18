@@ -1,3 +1,4 @@
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PseudoPartie {
 
@@ -30,17 +31,12 @@ public class PseudoPartie {
 		///tour////
 		int numB = 15;
 		Sens s = Sens.Avant;
-		int a =0;
+		Point p = new Point();
 		while(!IG.carte.listeBatHumain.isEmpty() && !IG.carte.listeBatMachine.isEmpty()){
-			//System.out.println(IG.tour);
-			//System.out.println("je suis dans le while");
-
-			System.out.println(IG.carte.listeBatMachine.isEmpty()); //Magic syso is magic
+			System.out.print(""); //Magic syso is magic
 			
 			if(IG.tour == 2){
-				System.out.println("je suis dans if");
 				numB = IA.choixAlleaBateauDep();
-				System.out.println("numB: "+ numB);
 				//s = IA.choixAlleaSensDep();
 				while(!IG.carte.verifDepPossible(IG.carte.listeBatMachine.get(numB),s)){
 					numB = IA.choixAlleaBateauDep();
@@ -60,9 +56,36 @@ public class PseudoPartie {
 					IG.carte.updateCaseBateau(IG.carte.listeBatMachine.get(numB), s);
 					IG.updateCaseMachine();
 				}
-				
-				IG.tour = 0;
+				p = IA.choixAleaPointTire();
+				if ((IA.KillAllHumans % 5) ==0){
+					int X = ThreadLocalRandom.current().nextInt(0,IG.homoSapiens.listePoint.size());
+					p = IG.homoSapiens.listePoint.get(X);
 				}
+				
+				int vie =3;
+				if (IG.homoSapiens.listePoint.contains(p)){
+					for(Bateaux b:IG.homoSapiens.listeBat){
+						if((b.p1.x == p.x && b.p1.y == p.y) || (b.centre.x == p.x && b.centre.y == p.y) || (b.p2.x == p.x && b.p2.y == p.y)){
+							vie = b.vie;
+						}
+					}
+					
+					if(vie > 1){
+						int ind = IG.homoSapiens.listeBat.indexOf(IG.carte.cases[p.x][p.y].bat);
+						IG.carte.tire(p.x, p.y, IG.IA, IG.homoSapiens);
+						System.out.println("FIRE IN THE HALL");
+						IG.remaining_hp(ind+1, IG.carte.cases[p.x][p.y].bat.vie);
+					}
+					else{
+						int ind = IG.homoSapiens.listeBat.indexOf(IG.carte.cases[p.x][p.y].bat);
+						IG.remaining_hp(ind+1, IG.carte.cases[p.x][p.y].bat.vie);
+						IG.carte.tire(p.x, p.y, IG.IA, IG.homoSapiens);
+						System.out.println("FIRE IN THE HALL");
+					}
+					
+				}
+				IG.tour = 0;
+			}
 		}
 		System.out.println("fini");
 		

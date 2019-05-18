@@ -89,14 +89,12 @@ public class Carte {
 				case Avant:
 					if(cases[temp.p2.x][temp.p2.y].occupant == Proprio.Libre) {
 						depPossible = true;
-						System.out.println(depPossible+"dep possible");
 					}		
 					break;
 					
 				case Arriere:
 					if(cases[temp.p1.x][temp.p1.y].occupant == Proprio.Libre) {
 						depPossible = true;
-						System.out.println(depPossible+"dep possible");
 					}
 					break;
 					
@@ -315,48 +313,36 @@ public class Carte {
 
 
 
-	public void tire(int x, int y, Joueur j) {
+	public int tire(int x, int y, Joueur j, Joueur H) {
+		int ind_bat=0;
 		if(cases[x][y].occupant == Proprio.Humain && j.nature == Proprio.Machine) {
-
-			for(Bateaux b:listeBatHumain) {
+			System.out.println("nique toi");
+			
+			for(int i=H.listeBat.size()-1; i>=0; i--){	//for(Bateaux b:H.listeBat) {
+				Bateaux b = H.listeBat.get(i);
 				if(b == cases[x][y].bat) { //verifie que le bateaux de la case est dans la liste
-					b.updateVie(); 
+					b.updateVie();
+					ind_bat=H.listeBat.indexOf(b);
+					System.out.println("hp:"+b.vie);
 					j.updateScore();
+					
 
 					if(b.vie == 0) {
 						listeBatHumain.remove(b);
+						H.listeBat.remove(b);
+						H.listePoint.remove(b.p1);
+						H.listePoint.remove(b.centre);
+						H.listePoint.remove(b.p2);
 						for(int jj = b.p1.x; jj<=b.p2.x; jj++) {
-							for(int i = b.p1.y; i<=b.p2.y; i++) {
-								cases[i][jj].occupant = Proprio.Libre;
-								
+							for(int ii = b.p1.y; ii<=b.p2.y; ii++) {
+								cases[ii][jj].occupant = Proprio.Libre;
 							}
 						}
 					}
 				}
-			}
-			
+			}	
 		}
-		else if( j.nature == Proprio.Humain) {
-			cases[x][y].vision = Vision.Claire;
-			if(cases[x][y].occupant == Proprio.Machine) {
-				for(Bateaux item:listeBatMachine) {
-					if(item == cases[x][y].bat) {	
-						item.updateVie();
-						j.updateScore();
-						if(item.vie == 0) {
-							listeBatMachine.remove(item);
-							for(int jj = item.p1.x; jj<=item.p2.x; jj++) {
-								for(int i = item.p1.y; i<=item.p2.y; i++) {
-									cases[i][jj].occupant = Proprio.Libre;
-
-									
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+		return ind_bat;
 	}
 	
 ////UNDER CONSTRUCTION /////		//// UNDER CONSTRUCTION /////		//// UNDER CONSTRUCTION /////

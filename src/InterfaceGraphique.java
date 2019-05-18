@@ -333,11 +333,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	switch (values[0]){
     	case "0":
     		tour++;
-    		System.out.println(tour);
     		i = Integer.valueOf(values[1]);
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
-    			System.out.println("i :"+j+", j:"+i);
     			if(carte.cases[j][i].occupant == Proprio.Libre){
     				setWaterState(1, j, i);
     				label.setText("Raté !");
@@ -369,7 +367,6 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     		break;
     	case "1":
     		tour++;
-    		System.out.println(tour);
 	        switch (values[1]){
 	        case "Haut":
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Avant)) {
@@ -473,19 +470,13 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	case "2":
     		boat = Integer.valueOf(values[2])-1;
     		break;
-    	case "3":
-    		System.out.println(boat);
-    		if (carte.cases[i][j].occupant == Proprio.Machine)
-    			System.out.println();
-    		if (hp >= 1){
-    			homoSapiens.listeBat.get(boat).updateVie();
-        		hp -= 1;
-        		remaining_hp(boat, homoSapiens.listeBat.get(boat).vie);
-        		label.setText("Touché !");			
-    		}
-    		else
-    			label.setText("T'es mauvais Jack");
-        	break;
+//    	case "3":
+//    		if (hp >= 1){
+//    			homoSapiens.listeBat.get(boat).updateVie();
+//        		hp -= 1;
+//        		remaining_hp(boat, homoSapiens.listeBat.get(boat).vie);		
+//    		}
+//        	break;
         }
 	}
 }
