@@ -30,8 +30,12 @@ public class PseudoPartie {
 		///tour////
 		int numB = 15;
 		Sens s = Sens.Avant;
+		int a =0;
 		while(!IG.carte.listeBatHumain.isEmpty() && !IG.carte.listeBatMachine.isEmpty()){
-			System.out.println(IG.tour);
+			//System.out.println(IG.tour);
+			//System.out.println("je suis dans le while");
+
+			System.out.println(IG.carte.listeBatMachine.isEmpty()); //Magic syso is magic
 			
 			if(IG.tour == 2){
 				System.out.println("je suis dans if");
@@ -46,11 +50,21 @@ public class PseudoPartie {
 				IG.carte.listeBatMachine.get(numB).deplacementBateau(s);
 				IG.carte.updateCaseBateau(IG.carte.listeBatMachine.get(numB), s);
 				IG.updateCaseMachine();
-				IG.tour = 0;
 				
-			}
-			
+				if(s == Sens.Rotation){
+					s = Sens.Avant;
+					if(!IG.carte.verifDepPossible(IG.carte.listeBatMachine.get(numB),s)){
+						s = Sens.Arriere;
+					}
+					IG.carte.listeBatMachine.get(numB).deplacementBateau(s);
+					IG.carte.updateCaseBateau(IG.carte.listeBatMachine.get(numB), s);
+					IG.updateCaseMachine();
+				}
+				
+				IG.tour = 0;
+				}
 		}
+		System.out.println("fini");
 		
 		
 

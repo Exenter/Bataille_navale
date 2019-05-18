@@ -357,6 +357,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 							}	
 	              		}	
 		              	carte.listeBatMachine.remove(carte.cases[j][i].bat);
+		              	IA.listeBat.remove(carte.cases[j][i].bat);
 		              	label.setText("Un de moins");
 		              	if(carte.listeBatMachine.isEmpty()){
 		              		JOptionPane.showMessageDialog(this, "GG WP no re");

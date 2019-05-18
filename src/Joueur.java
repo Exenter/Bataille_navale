@@ -73,7 +73,7 @@ public class Joueur {
 	
 	public int choixAlleaBateauDep() {
 		///int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
-		int indiceRandomBat = ThreadLocalRandom.current().nextInt(0,nbrBatInitial);
+		int indiceRandomBat = ThreadLocalRandom.current().nextInt(0,listeBat.size());
 		return indiceRandomBat;
 	}
 	
