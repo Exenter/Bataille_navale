@@ -87,6 +87,7 @@ public class PseudoPartie {
 					IG.carte.tire(p.x, p.y, IG.IA, IG.homoSapiens);
 					System.out.println("FIRE IN THE HALL");
 					IG.remaining_hp(ind, IG.carte.cases[p.x][p.y].bat.vie);
+					
 				}
 				IG.tour = 0;
 			}

@@ -162,7 +162,7 @@ public class Carte {
 					cases[b.p1.x][b.p1.y].bat = b;
 					break;
 					
-				case Rotation: // passage de verticale à horizontale
+				case Rotation: // passage de verticale a horizontale
 		
 					for(int i = 1; i <= Math.round(((b.taille/2)-0.5)); i++) {
 		
@@ -197,7 +197,7 @@ public class Carte {
 					break;
 					
 				case Arriere :
-					temp = cases[b.p2.x][b.p2.y-1];
+					temp = cases[b.p2.x][b.p2.y+1];
 					cases[b.p2.x][b.p2.y+1] = new Case(Proprio.Libre, temp.vision);
 					
 					cases[b.p1.x][b.p1.y].occupant = b.pro;
@@ -328,16 +328,16 @@ public class Carte {
 					
 
 					if(b.vie == 0) {
+						for(int jj = b.p1.x; jj<=b.p2.x; jj++) {
+							for(int ii = b.p1.y; ii<=b.p2.y; ii++) {
+								cases[jj][ii].occupant = Proprio.Libre;
+							}
+						}
 						listeBatHumain.remove(b);
 						H.listeBat.remove(b);
 						H.listePoint.remove(b.p1);
 						H.listePoint.remove(b.centre);
 						H.listePoint.remove(b.p2);
-						for(int jj = b.p1.x; jj<=b.p2.x; jj++) {
-							for(int ii = b.p1.y; ii<=b.p2.y; ii++) {
-								cases[ii][jj].occupant = Proprio.Libre;
-							}
-						}
 					}
 				}
 			}	
