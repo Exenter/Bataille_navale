@@ -4,7 +4,7 @@ public class Bateaux{
 	int taille; // impaire
 	int vie;
 	Proprio pro;
-	int numero = 0;
+	int numero;
 	Point p1;
 	Point centre;
 	Point p2;

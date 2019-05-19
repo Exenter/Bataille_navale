@@ -234,7 +234,7 @@ public class Carte {
 		}
 	
 
-	public void updateVisibilité(Bateaux b, Sens s) { //le bateaux a les coordonées de la nouvelle position
+	public void updateVisibilite(Bateaux b, Sens s) { //le bateaux a les coordonées de la nouvelle position
 		if(b.pro == Proprio.Humain) {
 			if(b.ori == Orientation.Horizontale && s == Sens.Avant && b.p2.x+1<taille) {/// nouvelle pos n'est pas sur le bord droit 
 				cases[b.p2.x+1][b.p2.y].vision = Vision.Claire; //(1)
@@ -346,14 +346,6 @@ public class Carte {
 	}
 	
 ////UNDER CONSTRUCTION /////		//// UNDER CONSTRUCTION /////		//// UNDER CONSTRUCTION /////
-	public boolean verifFinJeu() {
-		if(listeBatHumain.size() == 0 || listeBatMachine.size() == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 	
 //	public boolean verifTirePossible(int x, int y, Joueur j) {
 //	boolean b = true;

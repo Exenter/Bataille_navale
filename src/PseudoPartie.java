@@ -1,5 +1,7 @@
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.JOptionPane;
+
 public class PseudoPartie {
 
 	public static void main(String[] args) {
@@ -47,6 +49,12 @@ public class PseudoPartie {
 				IG.carte.listeBatMachine.get(numB).deplacementBateau(s);
 				IG.carte.updateCaseBateau(IG.carte.listeBatMachine.get(numB), s);
 				IG.updateCaseMachine();
+				for(int i=0;i<IG.taille;i++){
+	            	for (int j=0;j<IG.taille;j++){
+	                if(IG.carte.cases[i][j].vision == Vision.Claire && IG.carte.cases[i][j].occupant == Proprio.Libre)
+	                	IG.setWaterState(1, i, j);
+	            	}
+				}
 				
 				if(s == Sens.Rotation){
 					s = Sens.Avant;
@@ -56,7 +64,11 @@ public class PseudoPartie {
 					IG.carte.listeBatMachine.get(numB).deplacementBateau(s);
 					IG.carte.updateCaseBateau(IG.carte.listeBatMachine.get(numB), s);
 					IG.updateCaseMachine();
-				}
+					for(int i=0;i<IG.taille;i++){
+		            	for (int j=0;j<IG.taille;j++){
+		                if(IG.carte.cases[i][j].vision == Vision.Claire && IG.carte.cases[i][j].occupant == Proprio.Libre)
+		                	IG.setWaterState(1, i, j);
+				}}}
 				p = IA.choixAleaPointTire();
 				if ((IA.KillAllHumans % 2) ==0){
 					int X = ThreadLocalRandom.current().nextInt(0,IG.homoSapiens.listePoint.size());
@@ -80,6 +92,12 @@ public class PseudoPartie {
 			}
 		}
 		System.out.println("fini");
+		if(IG.carte.listeBatMachine.isEmpty()){
+      		JOptionPane.showMessageDialog(IG, "GG WP no re");
+      	}
+		else if(IG.carte.listeBatHumain.isEmpty()){
+      		JOptionPane.showMessageDialog(IG, "YOU LOSE");
+      	}
 		
 		
 

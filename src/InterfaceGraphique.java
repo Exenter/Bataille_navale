@@ -332,13 +332,15 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	String[] values = action.split("_");
     	switch (values[0]){
     	case "0":
+    		// actions de tir
     		tour++;
     		i = Integer.valueOf(values[1]);
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
+    			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
     			if(carte.cases[j][i].occupant == Proprio.Libre){
     				setWaterState(1, j, i);
-    				label.setText("Raté !");
+    				label.setText("Missed !");
     				carte.cases[j][i].vision = Vision.Claire;}
     			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
     			//ca pique les yeux mais ca marche
@@ -346,7 +348,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
                		setCaseBateau(carte.cases[j][i].bat);
                		carte.cases[j][i].bat.updateVie(); 
 					homoSapiens.updateScore();
-					label.setText("Touché !");
+					label.setText("Touched !");
 					if(carte.cases[j][i].bat.vie == 0){
 	              		for(int x = carte.cases[j][i].bat.p1.x; x<=carte.cases[j][i].bat.p2.x; x++) {
 							for(int y = carte.cases[j][i].bat.p1.y; y<=carte.cases[j][i].bat.p2.y; y++) {
@@ -356,10 +358,10 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	              		}	
 		              	carte.listeBatMachine.remove(carte.cases[j][i].bat);
 		              	IA.listeBat.remove(carte.cases[j][i].bat);
+		              	IA.listePoint.remove(carte.cases[j][i].bat.p1);
+		              	IA.listePoint.remove(carte.cases[j][i].bat.centre);
+		              	IA.listePoint.remove(carte.cases[j][i].bat.p2);
 		              	label.setText("Un de moins");
-		              	if(carte.listeBatMachine.isEmpty()){
-		              		JOptionPane.showMessageDialog(this, "GG WP no re");
-		              	}
 		              	carte.cases[j][i] = new Case(Proprio.Libre, Vision.Claire);
 					}	
     			}
@@ -372,15 +374,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Avant)) {
 		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
 		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Avant);
-		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Avant);
+		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Avant);
 		        	setCaseBateau(homoSapiens.listeBat.get(boat));
 		        	for(int i=0;i<taille;i++){
 		            	for (int j=0;j<taille;j++){
 		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
 		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
 		                	setCaseBateau(carte.cases[i][j].bat);
-		            	}}
+			                for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+			                			setWaterState(8, x, y);
+			                	}
+			                }
+		            	}}}
 	        	}
 	        	break;
 	        	
@@ -388,14 +396,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Arriere)) {
 		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
 		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Arriere);
-		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Arriere);
+		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Arriere);
 		        	setCaseBateau(homoSapiens.listeBat.get(boat));
 		        	for(int i=0;i<taille;i++){
 		            	for (int j=0;j<taille;j++){
 		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
 		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
 		                	setCaseBateau(carte.cases[i][j].bat);
+			                for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+			                			setWaterState(8, x, y);
+			                	}
+			                }
+		            	}
 		            	}}
 	        	}
 	        	break;
@@ -404,14 +419,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Arriere)) {
 		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
 		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Arriere);
-		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Arriere);
+		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Arriere);
 		        	setCaseBateau(homoSapiens.listeBat.get(boat));
 		        	for(int i=0;i<taille;i++){
 		            	for (int j=0;j<taille;j++){
 		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
 		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
 		                	setCaseBateau(carte.cases[i][j].bat);
+			                for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+			                			setWaterState(8, x, y);;
+			                	}
+			                }
+		            	}
 		                }}
 	        	}
 	        	break;
@@ -420,14 +442,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Avant)) {
 		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
 		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Avant);
-		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Avant);
+		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Avant);
 		        	setCaseBateau(homoSapiens.listeBat.get(boat));
 		        	for(int i=0;i<taille;i++){
 		            	for (int j=0;j<taille;j++){
 		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
 		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
 		                	setCaseBateau(carte.cases[i][j].bat);
+		                	for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+			                			setWaterState(8, x, y);
+			                	}
+			                }
+		            	}
 		                }
 		            	}
 	        	}
@@ -437,14 +466,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Rotation)) {
 		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
 		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Rotation);
-		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Rotation);
+		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Rotation);
 		        	setCaseBateau(homoSapiens.listeBat.get(boat));
 		        	for(int i=0;i<taille;i++){
 		            	for (int j=0;j<taille;j++){
 		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
 		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
 		                	setCaseBateau(carte.cases[i][j].bat);
+		                	for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+			                			setWaterState(8, x, y);
+			                	}
+			                }
+		            	}
 		                }}
 	        	}
 	        	break;
@@ -453,14 +489,21 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Rotation)) {
 		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
 		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Rotation);
-		        	carte.updateVisibilité(homoSapiens.listeBat.get(boat), Sens.Rotation);
+		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Rotation);
 		        	setCaseBateau(homoSapiens.listeBat.get(boat));
 		        	for(int i=0;i<taille;i++){
 		            	for (int j=0;j<taille;j++){
 		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
 		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine)
+		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
 		                	setCaseBateau(carte.cases[i][j].bat);
+		                	for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+			                			setWaterState(8, x, y);
+			                	}
+			                }
+		            	}
 		                }}
 	        	}
 	        	break;
@@ -468,7 +511,13 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        }
 	        break;
     	case "2":
-    		boat = Integer.valueOf(values[2])-1;
+    		boat = Integer.valueOf(values[2]);
+    		System.out.println("boat value:"+ boat);
+    		for (Bateaux bat: homoSapiens.listeBat) {
+    			if (bat.numero == boat)
+    				boat = homoSapiens.listeBat.indexOf(bat);
+    			}
+    		System.out.println("select boat :"+boat);
     		break;
 //    	case "3":
 //    		if (hp >= 1){
