@@ -2,14 +2,15 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Joueur {
-	int nbrBatInitial;
+	int nbrBatInitial;// Egale a 3 pour le moment
 	static int score;
 	static String nom;
-	Proprio nature;
+	Proprio nature; //Joueur Humain ou Machine
 	ArrayList<Bateaux> listeBat;
-	ArrayList<Point> listePoint;
-	int KillAllHumans;
+	ArrayList<Point> listePoint; // Liste de point occupé par les bateaux du joueur
+	int KillAllHumans; // Compteur de tour
 	
+	///CONSTRUCTEUR\\\
 	public Joueur(Proprio nature, int nbrBatInitial, String nom) {
 		this.nature = nature;
 		score = 0;
@@ -17,7 +18,7 @@ public class Joueur {
 		this.nom = nom;
 		listeBat = new ArrayList<Bateaux>();		
 		listePoint = new ArrayList<Point>();
-		if(nature == Proprio.Humain) {
+		if(nature == Proprio.Humain) { // Creation des bateaux en debut de partie
 			Point b1_p1 = new Point(3,2);
 			Point b1_c = new Point(3,3);
 			Point b1_p2 = new Point(3,4);
@@ -59,28 +60,26 @@ public class Joueur {
 		}	
 	}
 	
-	
+	///FONCTIONS\\\
 	public void updateScore() {
 		score += 1;
 	}
 	
 	
-	public void addBateaux(Bateaux b) {
+	public void addBateaux(Bateaux b) { //Attribution d'un bateau au joueur
 		listeBat.add(b);
 		listePoint.add(b.centre);
 		listePoint.add(b.p1);
 		listePoint.add(b.p2);
 	}
 	
-	public int choixAlleaBateauDep() {
-		///int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+	public int choixAlleaBateauDep() { // Choix alleatoir de l'indice du bateaux a deplacer (fonction utile a l'IA)
 		int indiceRandomBat = ThreadLocalRandom.current().nextInt(0,listeBat.size());
 		return indiceRandomBat;
 	}
 	
-	public Sens choixAlleaSensDep() {
-		Sens s = Sens.Avant;
-		
+	public Sens choixAlleaSensDep() { // Choix alleatoir du sens de deplacement (fonction utile a l'IA)
+		Sens s = Sens.Avant;		
 		int indiceSensAllea = ThreadLocalRandom.current().nextInt(0,3);
 		switch (indiceSensAllea) {
 		case 0:
@@ -101,27 +100,26 @@ public class Joueur {
 	}
 	
 
-	public Point choixAleaPointTire() {
+	public Point choixAleaPointTire() {// Choix alleatoir du point sur lequel tirer (fonction utile a l'IA)
 		boolean tirePoss = false;
 		Point p = new Point();
-		while(!tirePoss ) {
+		
+		while(!tirePoss ) { // Suicide non autoriser
 			int X = ThreadLocalRandom.current().nextInt(0,InterfaceGraphique.taille);
 			int Y = ThreadLocalRandom.current().nextInt(0,InterfaceGraphique.taille);
 			p = new Point(X, Y);
-			//System.out.println("coo point alea: " +p.x+" "+p.y);
+			
 			int i=0;
 			boolean trouve =false;
-			while(i<listePoint.size() && !trouve ) {
-				//System.out.println("check");
+			while(i<listePoint.size() && !trouve ) { // parcourt la liste de Point a la recherche de p				
 				Point d = listePoint.get(i);
 				if(p.x == d.x && p.y == d.y) {
-					trouve= true;
+					trouve= true; // si p est trouver tirePoss reste false donc nouveaux chois aleatoir de p
 				}
 				i += 1;
 			}
-			if(trouve==false) {
-				//System.out.println("oui");
-				tirePoss = true;// passage de tirePoss en true
+			if(trouve==false) { // Si la liste est fini et que p n'est pas trouver alors tirPoss est true et p est choisis				
+				tirePoss = true;
 			}
 			
 		}
