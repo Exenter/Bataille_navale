@@ -53,6 +53,8 @@ public class PseudoPartie {
 	            	for (int j=0;j<IG.taille;j++){
 	                if(IG.carte.cases[i][j].vision == Vision.Claire && IG.carte.cases[i][j].occupant == Proprio.Libre)
 	                	IG.setWaterState(1, i, j);
+	                if(IG.carte.cases[i][j].vision == Vision.Brouillard && IG.carte.cases[i][j].occupant == Proprio.Libre)
+	                	IG.setWaterState(8, i, j);
 	            	}
 				}
 				
@@ -68,6 +70,8 @@ public class PseudoPartie {
 		            	for (int j=0;j<IG.taille;j++){
 		                if(IG.carte.cases[i][j].vision == Vision.Claire && IG.carte.cases[i][j].occupant == Proprio.Libre)
 		                	IG.setWaterState(1, i, j);
+		                if(IG.carte.cases[i][j].vision == Vision.Brouillard && IG.carte.cases[i][j].occupant == Proprio.Libre)
+		                	IG.setWaterState(8, i, j);
 				}}}
 				p = IA.choixAleaPointTire();
 				if ((IA.KillAllHumans % 2) ==0){

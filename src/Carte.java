@@ -313,7 +313,7 @@ public class Carte {
 
 
 
-	public int tire(int x, int y, Joueur j, Joueur H) {
+	public void tire(int x, int y, Joueur j, Joueur H) {
 		int ind_bat=0;
 		if(cases[x][y].occupant == Proprio.Humain && j.nature == Proprio.Machine) {
 			System.out.println("nique toi");
@@ -333,16 +333,29 @@ public class Carte {
 								cases[jj][ii].occupant = Proprio.Libre;
 							}
 						}
+						int ind = b.numero;
+						switch (ind) {
+						case 1:
+							InterfaceGraphique.ship1.setEnabled(false);
+							break;
+						case 2:
+							InterfaceGraphique.ship2.setEnabled(false);
+							break;
+						case 3:
+							InterfaceGraphique.ship3.setEnabled(false);
+							break;
+							
+						}
 						listeBatHumain.remove(b);
 						H.listeBat.remove(b);
 						H.listePoint.remove(b.p1);
 						H.listePoint.remove(b.centre);
 						H.listePoint.remove(b.p2);
+						
 					}
 				}
 			}	
 		}
-		return ind_bat;
 	}
 	
 ////UNDER CONSTRUCTION /////		//// UNDER CONSTRUCTION /////		//// UNDER CONSTRUCTION /////
