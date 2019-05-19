@@ -5,18 +5,16 @@ import java.util.Set;
 public class Point {
 	int x;
 	int y;
-	//Set<Integer> verif;
 	ArrayList<Integer> verif;
 	
+	////CONSTRUCTEUR\\\\
 	public Point() {
 		x = 5;
 		y = 5;
-		//verif = new HashSet<Integer>();
 		verif = new ArrayList<Integer>();
 		for(int i =0; i<InterfaceGraphique.taille; i++) {
 			verif.add(i);
-			//v.add(i);
-			
+						
 		}
 	}
 	
@@ -29,7 +27,8 @@ public class Point {
 		}
 	}
 	
-	public void depX(Sens sens) {
+	////FONCTIONS\\\\
+	public void depX(Sens sens) { //Deplacement horizontale du point
 		if (sens == Sens.Avant) 
 			if (verif.contains(x+1)) 
 				x +=1;
@@ -38,7 +37,7 @@ public class Point {
 				x -=1;
 	}
 	
-	public void depY(Sens sens) {
+	public void depY(Sens sens) { //Deplacement veriticale du point
 		if (sens == Sens.Avant) 
 			if (verif.contains(y+1)) 
 				y +=1;
@@ -47,13 +46,14 @@ public class Point {
 				y -=1;
 	}
 	
-	public void rotationX(Point p, String cote) {
+	
+	// deplacement du point par rapport a un autre
+	public void rotationX(Point p, String cote) {//Changement du x
 		if (cote == "+") {
 			if(verif.contains(p.x+1)) {
 				this.x = p.x+1;
 				
-			}
-			
+			}			
 		}
 		if (cote == "-") {
 			if(verif.contains(p.x-1)) {
@@ -62,12 +62,11 @@ public class Point {
 		}
 	}
 	
-	public void rotationY(Point p, String cote) {
+	public void rotationY(Point p, String cote) {//Changement du y
 		if (cote == "+") {
 			if(verif.contains(p.y+1)) {
 				this.y = p.y+1;
-			}
-			
+			}			
 		}
 		if (cote == "-") {
 			if(verif.contains(p.y-1)) {
