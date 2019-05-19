@@ -1,22 +1,23 @@
 
 
 public class Bateaux{
-	int taille; // impaire
-	int vie;
-	Proprio pro;
+	int taille; // impaire = a 3 pour l'instant
+	int vie; 
+	Proprio pro; // Bateaux apartient a Machine ou Humain
 	int numero;
 	Point p1;
 	Point centre;
 	Point p2;
-	Orientation ori;
+	Orientation ori; // Orientation du bateaux sur la carte
 	InterfaceGraphique gui;
+	
 	//// CONSTRUCTEUR /////
 public Bateaux(Point p1, Point centre, Point p2, Proprio pro, InterfaceGraphique x, int numero) {
 		gui = x;
 		this.pro = pro;
 		this.centre = centre;
 		this.numero = numero;
-		if(p1.x < p2.x || p1.y < p2.y) {
+		if(p1.x < p2.x || p1.y < p2.y) { // les coordonées de p1 sont toujours inferieurs celles de p2
 			this.p1 = p1;
 			
 			this.p2 = p2;
@@ -26,10 +27,10 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, InterfaceGraphique
 			this.p2 = p1;
 		}
 
-		if(p1.x == p2.x && p1.x == centre.x) {
+		if(p1.x == p2.x && p1.x == centre.x) { // Defini l'orientation et la taille en fonction des coordonées des points
 			ori = Orientation.Verticale;
 			taille = p2.y -p1.y;
-			vie = taille+1;
+			vie = taille+1; 
 		}
 		else {
 			ori = Orientation.Horizontale;
@@ -38,7 +39,7 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, InterfaceGraphique
 		}
 	}
 
-public Bateaux(Point p1, Point centre, Point p2, Proprio pro, int numero ) {
+public Bateaux(Point p1, Point centre, Point p2, Proprio pro, int numero ) { // Constructeur sans interface
 	gui = null;
 	this.pro = pro;
 	this.centre = centre;
@@ -65,30 +66,13 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, int numero ) {
 }
 
 	//// FONCTIONS /////
-
-//	public void setCaseBateau(Orientation o){
-//		if (o == Orientation.Verticale){
-//			gui.setWaterState(2, p1.x, p1.y);
-//			gui.setWaterState(3, centre.x, centre.y);
-//			gui.setWaterState(4, p2.x, p2.y);
-//
-//		}
-//		else{
-//			gui.setWaterState(5, p1.x, p1.y);
-//			gui.setWaterState(6, centre.x, centre.y);
-//			gui.setWaterState(7, p2.x, p2.y);
-//		}
-//	}	
 	
 	public void deplacementBateau(Sens sens) {
-
-		switch (sens) {
+		switch (sens) { // Dependament de l'orientation du bateaux et du sens de deplacement -> deplacer les points du bateaux
 		case Avant :
 			if (ori == Orientation.Horizontale) {
-				p1.depX(sens);
-				//System.out.println("class bateau coordoné x init b.centre: "+ centre.x);
+				p1.depX(sens);				
 				centre.depX(sens);
-				//System.out.println("class bateau coordoné x new b.centre: "+ centre.x);
 				p2.depX(sens);
 			}
 			else {
@@ -96,9 +80,8 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, int numero ) {
 				centre.depY(sens);
 				p2.depY(sens);
 			}
-			
-			
 			break;
+				
 		case Arriere:
 			if (ori == Orientation.Horizontale) {
 				p1.depX(sens);
@@ -110,7 +93,6 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, int numero ) {
 				centre.depY(sens);
 				p2.depY(sens);
 			}
-			
 			break;
 			
 		case Rotation:
@@ -127,8 +109,7 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, int numero ) {
 				p1.x = centre.x;
 				p2.x = centre.x;
 				ori = Orientation.Verticale;
-			}
-			
+			}			
 			break;
 			
 		default:
@@ -143,16 +124,10 @@ public Bateaux(Point p1, Point centre, Point p2, Proprio pro, int numero ) {
 			vie = vie - 1;
 			if (vie < 0)
 				vie =0;
-		
 	}
 	
 		
 }
 
 	
-	//Methodes
 	
-	/* tire
-	 * changement point de vie
-	 */
-
