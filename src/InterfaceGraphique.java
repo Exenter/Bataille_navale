@@ -5,9 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class InterfaceGraphique extends JFrame implements ActionListener{
-
-	/* TODO
-	 * faire fonctionner l'affichage des bateaux
+	/*
+	 * certaines parties du deplacement sont en commentaires car juste repetitives => keep it simple
 	 */
 	
 	JButton[][] butt;
@@ -31,6 +30,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     Carte carte;
     
     public InterfaceGraphique(Joueur homoSapiens, Joueur IA, Carte carte){
+    	// /!\ avec les boucles for les x et y sont inverses quand on y accede !
     	butt = new JButton[taille][taille];
     	this.carte = carte;
         for(int i=0;i<taille;i++){
@@ -43,7 +43,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
         }
         this.homoSapiens = homoSapiens;
         this.IA = IA;
-        //homoSapiens.nom = JOptionPane.showInputDialog(this, "Choose a name :", "Yarrhhh");
+        homoSapiens.nom = JOptionPane.showInputDialog(this, "Choose a name :", "Yarrhhh");
     }
     
     public void les_boutons(){
@@ -53,24 +53,28 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     setLayout(new BorderLayout());
     JPanel panelGrille = new JPanel(new GridLayout(taille, taille));
     
-    // set image sizing
+    //  -- panneau du bas -- //
+    BorderLayout bottom_master = new BorderLayout();
+    JPanel bottom_side = new JPanel(bottom_master);
+
+    // -- set image sizing -- //
     ImageIcon fire = new ImageIcon("images/canon.png");
     Image fire_img = fire.getImage();
     fire = new ImageIcon(fire_img.getScaledInstance(70, 50, Image.SCALE_DEFAULT));
     ship = new ImageIcon("images/ship_hp.png");
     Image ship_img = ship.getImage();
     ship = new ImageIcon(ship_img.getScaledInstance(60, 35, Image.SCALE_DEFAULT));
-    
-    //enlever pour le vrai test !
+       
+    // -- set les PVs de base -- //
     ImageIcon ship_hp3 = new ImageIcon("images/3_hp.png");    
     
-    // info du dessus
+    // -- info du dessus -- //
     JPanel top_side = new JPanel();
     label = new JLabel("THE CAKE IS A LIE", JLabel.CENTER);
     top_side.add(label);
     add(top_side, BorderLayout.PAGE_START);
     
-    //la carte
+    // -- la carte  -- //
     for(int i=0;i<taille;i++){
     	for (int j=0;j<taille;j++){
         panelGrille.add(butt[i][j]);
@@ -83,10 +87,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     
     add(panelGrille, BorderLayout.CENTER);
     
-    BorderLayout bottom_master = new BorderLayout();
-    JPanel bottom_side = new JPanel(bottom_master);
     
-    // barre de vie
+    
+    // -- barre de vie -- //
     JPanel hp_bar = new JPanel(new GridLayout(1,6));
     hp_bar1 = new JLabel("", JLabel.CENTER);
     hp_bar1.setIcon(ship_hp3);
@@ -114,20 +117,20 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     hp_bar.add(hp_bar3);
     bottom_side.add(hp_bar, BorderLayout.PAGE_START);
     
-    // actions
+    // -- deplacement -- //
     JPanel actions = new JPanel(new GridLayout(2,1));
     JPanel actions1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    JPanel actions2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    JButton haut = new JButton();
-    haut.addActionListener(this);
-    haut.setActionCommand("1_Haut");
-    ImageIcon up = new ImageIcon("images/up.png");
-    haut.setIcon(up);
-    JButton bas = new JButton();
-    bas.addActionListener(this);
-    bas.setActionCommand("1_Bas");
-    ImageIcon bot = new ImageIcon("images/bot.png");
-    bas.setIcon(bot);
+//    JPanel actions2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+//    JButton haut = new JButton();
+//    haut.addActionListener(this);
+//    haut.setActionCommand("1_Haut");
+//    ImageIcon up = new ImageIcon("images/up.png");
+//    haut.setIcon(up);
+//    JButton bas = new JButton();
+//    bas.addActionListener(this);
+//    bas.setActionCommand("1_Bas");
+//    ImageIcon bot = new ImageIcon("images/bot.png");
+//    bas.setIcon(bot);
     JButton gauche = new JButton();
     gauche.addActionListener(this);
     gauche.setActionCommand("1_Gauche");
@@ -143,30 +146,30 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     rot_G.setActionCommand("1_rotG");
     ImageIcon rotG = new ImageIcon("images/rotG.png");
     rot_G.setIcon(rotG);
-    JButton rot_D = new JButton();
-    rot_D.addActionListener(this);
-    rot_D.setActionCommand("1_rotD");
-    ImageIcon rotD = new ImageIcon("images/rotD.png");
-    rot_D.setIcon(rotD);
-    JButton tir = new JButton();
-    tir.addActionListener(this);
-    tir.setActionCommand("3_FIRE");
-    tir.setPreferredSize(new Dimension(70,60));
-    tir.setIcon(fire);
-    bottom_side.add(tir, BorderLayout.LINE_START);
+//    JButton rot_D = new JButton();
+//    rot_D.addActionListener(this);
+//    rot_D.setActionCommand("1_rotD");
+//    ImageIcon rotD = new ImageIcon("images/rotD.png");
+//    rot_D.setIcon(rotD);
+//    JButton tir = new JButton();
+//    tir.addActionListener(this);
+//    tir.setActionCommand("3_FIRE");
+//    tir.setPreferredSize(new Dimension(70,60));
+//    tir.setIcon(fire);
+//    bottom_side.add(tir, BorderLayout.LINE_START);
     actions1.add(gauche);
-    actions1.add(haut);
+    actions1.add(rot_G);
+//    actions1.add(haut);
     actions1.add(droite);
-    actions2.add(rot_G);
-    actions2.add(bas);    
-    actions2.add(rot_D);  
-    actions.add(actions1, JPanel.TOP_ALIGNMENT);
-    actions.add(actions2, JPanel.BOTTOM_ALIGNMENT);
+//    actions2.add(bas);    
+//    actions2.add(rot_D);  
+    actions.add(actions1);
+//    actions.add(actions2, JPanel.BOTTOM_ALIGNMENT);
     bottom_side.add(actions, BorderLayout.CENTER);
     
     add(bottom_side, BorderLayout.PAGE_END);
     
-    // Le menu
+    // -- Le menu -- //
     JMenuBar barreMenu = new JMenuBar();
     JMenu menu = new JMenu("Le_menu");
     JMenuItem itemSauvegarder = new JMenuItem(new SaveAction("Sauvegarder"));
@@ -177,7 +180,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     barreMenu.add(menu);
     setJMenuBar(barreMenu); 
     
-    //fin
+    // -- fin -- //
     pack();
 	setLocationRelativeTo(null);
 	setVisible(true);
@@ -185,6 +188,10 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     }
 
     public void setWaterState(int I, int Bx, int By){
+    	/* methode pour le changement d'etat du fond de la case :
+    	 * 1 = eau; 8 = brouillard
+    	 * 2 - 7 = affichage du bateau selon son orientation
+    	 */
     	switch(I){
     	case 1:
     		ImageIcon water = new ImageIcon("images/water.jpg");
@@ -240,6 +247,10 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     }
     
     public int remaining_hp(int boat, int hp){
+    	/*
+    	 * changement de l'image coeur donnant l'info des PV restant au bateau donne
+    	 * acces au bateau par son numero qui est attribue lors de la creation
+    	 */
     	ImageIcon ship_hp0 = new ImageIcon("images/0_hp.png");
     	ImageIcon ship_hp1 = new ImageIcon("images/1_hp.png");
     	ImageIcon ship_hp2 = new ImageIcon("images/2_hp.png");
@@ -308,6 +319,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
         
     
     public void setCaseBateau(Bateaux b){
+    	/*
+    	 * appel de la fonction de modification d'affichage de la carte pour afficher un bateau specifique
+    	 */
 		if (b.ori == Orientation.Verticale){
 			setWaterState(2, b.p1.x, b.p1.y);
 			setWaterState(3, b.centre.x, b.centre.y);
@@ -322,6 +336,9 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	}	
   
     public void updateCaseMachine(){
+    	/*
+    	 * comme au dessus mais uniquement si on a deja la vision sur la case => utilise seulement pour l'IA
+    	 */
     	for(int x = 0; x<taille; x++) {
 			for(int y = 0; y<taille; y++) {
 				if (carte.cases[y][x].occupant == Proprio.Machine && carte.cases[y][x].vision == Vision.Claire){
@@ -331,29 +348,38 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     }
     
 	public void actionPerformed(ActionEvent Act) {
+		/*
+		 * les actionPerformed gerent la plus grande partie du jeu :
+		 * case 0 = appui sur une case = permet de tirer
+		 * case 1 = deplacement
+		 * case 2 = selection du bateau avec lequel on souahite jouer
+		 */
     	String action = Act.getActionCommand();
     	String[] values = action.split("_");
     	switch (values[0]){
     	case "0":
     		// actions de tir
-    		tour++;
+    		tour++; // utile pour l'IA, pour lui dire quand jouer
     		i = Integer.valueOf(values[1]);
     		j = Integer.valueOf(values[2]);
     		if (action.equals("0_"+i+"_"+j)){
     			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
     			if(carte.cases[j][i].occupant == Proprio.Libre){
+    				// case vide = on peut maintenant voir ce qu'il s'y passe
     				setWaterState(1, j, i);
     				label.setText("Missed !");
     				carte.cases[j][i].vision = Vision.Claire;}
     			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
     			//ca pique les yeux mais ca marche
     			if(carte.cases[j][i].occupant == Proprio.Machine){
+    				// case occupee par l'IA = 
     				System.out.println(carte.cases[j][i].bat.numero);
                		setCaseBateau(carte.cases[j][i].bat);
                		carte.cases[j][i].bat.updateVie(); 
 					homoSapiens.updateScore();
 					label.setText("Touched !");
 					if(carte.cases[j][i].bat.vie == 0){
+						// si le bateau vise est mort, on l'enleve de la liste des bateaux disponibles pour l'ia, et de la carte
 	              		for(int x = carte.cases[j][i].bat.p1.x; x<=carte.cases[j][i].bat.p2.x; x++) {
 							for(int y = carte.cases[j][i].bat.p1.y; y<=carte.cases[j][i].bat.p2.y; y++) {
 								carte.cases[x][y].occupant = Proprio.Libre;
@@ -375,50 +401,50 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     	case "1":
     		tour++;
 	        switch (values[1]){
-	        case "Haut":
-	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Avant)) {
-		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
-		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Avant);
-		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Avant);
-		        	setCaseBateau(homoSapiens.listeBat.get(boat));
-		        	for(int i=0;i<taille;i++){
-		            	for (int j=0;j<taille;j++){
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
-		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
-		                	setCaseBateau(carte.cases[i][j].bat);
-			                for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
-			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
-			                		if(carte.cases[x][y].vision == Vision.Brouillard)
-			                			setWaterState(8, x, y);
-			                	}
-			                }
-		            	}}}
-	        	}
-	        	break;
-	        	
-	        case "Bas":
-	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Arriere)) {
-		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
-		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Arriere);
-		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Arriere);
-		        	setCaseBateau(homoSapiens.listeBat.get(boat));
-		        	for(int i=0;i<taille;i++){
-		            	for (int j=0;j<taille;j++){
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
-		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
-		                	setCaseBateau(carte.cases[i][j].bat);
-			                for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
-			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
-			                		if(carte.cases[x][y].vision == Vision.Brouillard)
-			                			setWaterState(8, x, y);
-			                	}
-			                }
-		            	}
-		            	}}
-	        	}
-	        	break;
+//	        case "Haut":
+//	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Avant)) {
+//		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Avant);
+//		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Avant);
+//		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Avant);
+//		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+//		        	for(int i=0;i<taille;i++){
+//		            	for (int j=0;j<taille;j++){
+//		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+//		                	setWaterState(1, i, j);
+//		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
+//		                	setCaseBateau(carte.cases[i][j].bat);
+//			                for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+//			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+//			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+//			                			setWaterState(8, x, y);
+//			                	}
+//			                }
+//		            	}}}
+//	        	}
+//	        	break;
+//	        	
+//	        case "Bas":
+//	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Arriere)) {
+//		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Arriere);
+//		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Arriere);
+//		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Arriere);
+//		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+//		        	for(int i=0;i<taille;i++){
+//		            	for (int j=0;j<taille;j++){
+//		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+//		                	setWaterState(1, i, j);
+//		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
+//		                	setCaseBateau(carte.cases[i][j].bat);
+//			                for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+//			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+//			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+//			                			setWaterState(8, x, y);
+//			                	}
+//			                }
+//		            	}
+//		            	}}
+//	        	}
+//	        	break;
 	        	
 	        case "Gauche":
 	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Arriere)) {
@@ -490,34 +516,35 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 	        	}
 	        	break;
 	        	
-	        case "rotD":
-	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Rotation)) {
-		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
-		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Rotation);
-		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Rotation);
-		        	setCaseBateau(homoSapiens.listeBat.get(boat));
-		        	for(int i=0;i<taille;i++){
-		            	for (int j=0;j<taille;j++){
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
-		                	setWaterState(1, i, j);
-		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
-		                	setCaseBateau(carte.cases[i][j].bat);
-		                	for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
-			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
-			                		if(carte.cases[x][y].vision == Vision.Brouillard)
-			                			setWaterState(8, x, y);
-			                	}
-			                }
-		            	}
-		                }}
-	        	}
-	        	break;
+//	        case "rotD":
+//	        	if(carte.verifDepPossible(homoSapiens.listeBat.get(boat), Sens.Rotation)) {
+//		        	homoSapiens.listeBat.get(boat).deplacementBateau(Sens.Rotation);
+//		        	carte.updateCaseBateau(homoSapiens.listeBat.get(boat), Sens.Rotation);
+//		        	carte.updateVisibilite(homoSapiens.listeBat.get(boat), Sens.Rotation);
+//		        	setCaseBateau(homoSapiens.listeBat.get(boat));
+//		        	for(int i=0;i<taille;i++){
+//		            	for (int j=0;j<taille;j++){
+//		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Libre)
+//		                	setWaterState(1, i, j);
+//		                if(carte.cases[i][j].vision == Vision.Claire && carte.cases[i][j].occupant == Proprio.Machine) {
+//		                	setCaseBateau(carte.cases[i][j].bat);
+//		                	for (int x= carte.cases[i][j].bat.p1.x; x <= carte.cases[i][j].bat.p2.x; x++) {
+//			                	for (int y= carte.cases[i][j].bat.p1.y; y <= carte.cases[i][j].bat.p2.y; y++) {
+//			                		if(carte.cases[x][y].vision == Vision.Brouillard)
+//			                			setWaterState(8, x, y);
+//			                	}
+//			                }
+//		            	}
+//		                }}
+//	        	}
+//	        	break;
 	        	
 	        }
 	        break;
     	case "2":
     		boat = Integer.valueOf(values[2]);
     		System.out.println("boat value:"+ boat);
+    		// on selectionne le bateau par le numero qui lui est attribue : quand un item est supprime d'une liste son indice change
     		for (Bateaux bat: homoSapiens.listeBat) {
     			if (bat.numero == boat)
     				boat = homoSapiens.listeBat.indexOf(bat);
