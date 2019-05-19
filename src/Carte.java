@@ -316,11 +316,11 @@ public class Carte {
 	public void tire(int x, int y, Joueur j, Joueur H) {
 		int ind_bat=0;
 		if(cases[x][y].occupant == Proprio.Humain && j.nature == Proprio.Machine) {
-			System.out.println("nique toi");
 			
 			for(int i=H.listeBat.size()-1; i>=0; i--){	//for(Bateaux b:H.listeBat) {
 				Bateaux b = H.listeBat.get(i);
 				if(b == cases[x][y].bat) { //verifie que le bateaux de la case est dans la liste
+					H.updateScore();
 					b.updateVie();
 					ind_bat=H.listeBat.indexOf(b);
 					System.out.println("hp:"+b.vie);
