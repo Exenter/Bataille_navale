@@ -348,6 +348,7 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
     			System.out.println(carte.cases[j][i].occupant+" "+carte.cases[j][i].vision);
     			//ca pique les yeux mais ca marche
     			if(carte.cases[j][i].occupant == Proprio.Machine){
+    				System.out.println(carte.cases[j][i].bat.numero);
                		setCaseBateau(carte.cases[j][i].bat);
                		carte.cases[j][i].bat.updateVie(); 
 					homoSapiens.updateScore();
@@ -355,7 +356,8 @@ public class InterfaceGraphique extends JFrame implements ActionListener{
 					if(carte.cases[j][i].bat.vie == 0){
 	              		for(int x = carte.cases[j][i].bat.p1.x; x<=carte.cases[j][i].bat.p2.x; x++) {
 							for(int y = carte.cases[j][i].bat.p1.y; y<=carte.cases[j][i].bat.p2.y; y++) {
-								carte.cases[y][x].occupant = Proprio.Libre;
+								carte.cases[x][y].occupant = Proprio.Libre;
+								//carte.cases[x][y] = new Case(Proprio.Libre, Vision.Claire);
 								setWaterState(1, x, y);
 							}	
 	              		}	

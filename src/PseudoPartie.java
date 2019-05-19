@@ -100,6 +100,7 @@ public class PseudoPartie {
 		if(IG.carte.listeBatMachine.isEmpty()){
       		JOptionPane.showMessageDialog(IG, "GG WP no re");
       	}
+		
 		else if(IG.carte.listeBatHumain.isEmpty()){
       		JOptionPane.showMessageDialog(IG, "YOU LOSE");
       	}

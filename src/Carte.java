@@ -246,7 +246,7 @@ public class Carte {
 				}
 			}
 
-			else if(b.ori == Orientation.Horizontale && s == Sens.Arriere && b.p1.x-1>0) { /// nouvelle pos n'est pas sur le bord gauche
+			else if(b.ori == Orientation.Horizontale && s == Sens.Arriere && b.p1.x-1>=0) { /// nouvelle pos n'est pas sur le bord gauche
 				cases[b.p1.x-1][b.p1.y].vision = Vision.Claire; //(2)
 				if(b.p1.y-1>0) { /// nouvelle pos n 'est pas sur le bord bas
 					cases[b.p1.x-1][b.p1.y-1].vision = Vision.Claire; //(21)
@@ -266,7 +266,7 @@ public class Carte {
 				} 
 			}
 
-			else if(b.ori == Orientation.Verticale && s == Sens.Arriere && b.p1.y-1>0) {  /// nouvelle pos n 'est pas sur le bord bas
+			else if(b.ori == Orientation.Verticale && s == Sens.Arriere && b.p1.y-1>=0) {  /// nouvelle pos n 'est pas sur le bord bas
 				cases[b.p1.x][b.p1.y-1].vision = Vision.Claire; //(4)
 				if(b.p1.x-1>0) {  /// nouvelle pos n 'est pas sur le bord gauche
 					cases[b.p1.x-1][b.p1.y-1].vision = Vision.Claire; //(41)
